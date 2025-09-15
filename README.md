@@ -1,2 +1,2 @@
-# CEN4090L-Project
-We are attempting to create a social/dating application which uses music to connect people together, we plan on making this as a mobile application with Spotify integration. 
+# CEN4090L-Project - College Companion
+We are creating an application that allows students to manage their finances, hobbies, and other responsibilities to encourage better usage of money and free time.
