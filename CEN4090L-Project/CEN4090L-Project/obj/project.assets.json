@@ -30457,11 +30457,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\balle\\source\\repos\\ballerbajan\\CEN4090L-Project\\CEN4090L-Project\\CEN4090L-Project\\CEN4090L-Project.csproj",
+      "projectUniqueName": "C:\\HardDocuments\\Classes\\CEN4020+CEN4090L\\Project Stuff\\CEN4090L-Project\\CEN4090L-Project\\CEN4090L-Project\\CEN4090L-Project.csproj",
       "projectName": "CEN4090L-Project",
-      "projectPath": "C:\\Users\\balle\\source\\repos\\ballerbajan\\CEN4090L-Project\\CEN4090L-Project\\CEN4090L-Project\\CEN4090L-Project.csproj",
+      "projectPath": "C:\\HardDocuments\\Classes\\CEN4020+CEN4090L\\Project Stuff\\CEN4090L-Project\\CEN4090L-Project\\CEN4090L-Project\\CEN4090L-Project.csproj",
       "packagesPath": "C:\\Users\\balle\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\balle\\source\\repos\\ballerbajan\\CEN4090L-Project\\CEN4090L-Project\\CEN4090L-Project\\obj\\",
+      "outputPath": "C:\\HardDocuments\\Classes\\CEN4020+CEN4090L\\Project Stuff\\CEN4090L-Project\\CEN4090L-Project\\CEN4090L-Project\\obj\\",
       "projectStyle": "PackageReference",
       "crossTargeting": true,
       "fallbackFolders": [
