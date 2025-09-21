@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "j84Yp/JseH4=",
+  "dgSpecHash": "nzd2bMKkgYU=",
   "success": true,
-  "projectFilePath": "C:\\Users\\balle\\source\\repos\\ballerbajan\\CEN4090L-Project\\CEN4090L-Project\\CEN4090L-Project\\CEN4090L-Project.csproj",
+  "projectFilePath": "C:\\HardDocuments\\Classes\\CEN4020+CEN4090L\\Project Stuff\\CEN4090L-Project\\CEN4090L-Project\\CEN4090L-Project\\CEN4090L-Project.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\balle\\.nuget\\packages\\communitytoolkit.maui\\9.1.0\\communitytoolkit.maui.9.1.0.nupkg.sha512",
     "C:\\Users\\balle\\.nuget\\packages\\communitytoolkit.maui.core\\9.1.0\\communitytoolkit.maui.core.9.1.0.nupkg.sha512",
