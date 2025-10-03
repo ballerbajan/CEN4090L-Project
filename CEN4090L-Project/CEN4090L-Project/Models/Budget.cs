@@ -10,5 +10,5 @@ public class Budget
 
 	public int? Expeneses { get; set; }
 
-
+	public int? totalExpenses { get; set; }
 }
