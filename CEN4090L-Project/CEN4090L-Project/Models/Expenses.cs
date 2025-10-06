@@ -2,16 +2,16 @@
 
 public class Expenses
 {
-    public Expenses() { }
+	public Expenses() {}
 
-    public string? Title { get; set; }
+	public string? Title { get; set; }
 
-    public decimal? Amount { get; set; }
+	public decimal? Amount { get; set; }
 
     public string? Category { get; set; }
 
-    public override string ToString()
-    {
-        return $"{Title}: {Amount}";
+	public override string ToString()
+	{
+		return $"{Title}: {Amount}";
     }
 }
