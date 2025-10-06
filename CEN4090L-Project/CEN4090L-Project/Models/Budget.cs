@@ -11,39 +11,44 @@ public class Budget
 
     public int? Priority { get; set; }
 
-    public list<Expense> Expeneses { get; set; }
+    public List<Expense> Expeneses {
+        get
+        {
+            return expenses;
+        }
+    }
 
     //calculates the total expense per expenses
-    public decimal? totalExpense
+    public decimal? totalExpense()
     {
-
         decimal? totalExpenses = 0;
-	    foreach (e in Expenses)
-		   totalExpenses += e.amount;
+	    foreach (Expense e in Expenses)
+        {
+           totalExpenses += e.amount;
+        }
 		return totalExpenses;
 	}
 
 //returns a list with the specified category
-public list<Expense> returnCategory(int id)
+public static list<Expense>? returnCategory(int id)
 {
     if (id < 0 && id > 3)
         return null;
-    list<Expense> category = new List<Expense>();
+    List<Expense> category = new List<Expense>();
 
-    foreach (e in Expenses)
-        if (e.id == id)
-            category.add(e);
-
+    foreach (Expense e in Expenses)
+    {
+      if (e.id == id)
+        category.Add(e);
+    }
     return category;
-
-
 }
 
 //remove desire expense from the list of expenses
-public void removeExpense(Expense e1)
+public bool removeExpense(Expense e1)
 {
     bool removed = 0;
-    foreach (e in Expenses)
+    foreach (Expense e in Expenses)
     {
         //checks if the expense exiist in the list
         if (e.title == e1.title)
@@ -58,7 +63,7 @@ public void removeExpense(Expense e1)
 //add desire expense from the list of expenses
 public void addExpense(Expense e)
 {
-    Expenses.add(e);
+    expenses.add(e);
 }
 
 
