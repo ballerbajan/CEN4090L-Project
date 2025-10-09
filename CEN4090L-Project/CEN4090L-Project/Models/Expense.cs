@@ -1,8 +1,8 @@
 ﻿using System;
 
-public class Expenses
+public class Expense
 {
-	public Expenses() {}
+	public Expense() {}
 
 	public string? Title { get; set; }
 
