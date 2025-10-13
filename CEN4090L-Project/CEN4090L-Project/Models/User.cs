@@ -19,6 +19,8 @@ namespace CEN4090L_Project.Models
 
         public Budget? Budget { get; set; }
 
+        public float? Income { get; set; } // tracked monthly income just a float
+
 
         public override string ToString()
         {
