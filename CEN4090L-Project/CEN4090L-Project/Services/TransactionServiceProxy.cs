@@ -61,5 +61,45 @@ namespace CEN4090L_Project.Services
 
             user.Budget = newBudget;
         }
+
+        //add desire expense from the list of expenses
+        public void addExpense(Expense e)
+        {
+            expenses.add(e);
+        }
+
+        //remove desire expense from the list of expenses
+        public bool removeExpense(Expense e1)
+        {
+            bool removed = 0;
+            foreach (Expense e in Expenses)
+            {
+                //checks if the expense exiist in the list
+                if (e.title == e1.title)
+                {
+                    removed = Expenses.remove(e1);
+
+                }
+            }
+            return removed;
+        }
+
+        //METHODS
+        //helper returns a list with the specified category
+        //NOTE: the int ID is gonna be changed for BudgetCategory
+        private static list<Expense>? returnCategory(int id)
+        {
+            if (id < 0 && id > 3)
+                return null;
+            List<Expense> category = new List<Expense>();
+
+            foreach (Expense e in Expenses)
+            {
+                if (e.id == id)
+                    category.Add(e);
+            }
+            return category;
+        }
+
     }
 }
