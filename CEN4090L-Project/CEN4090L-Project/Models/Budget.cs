@@ -13,8 +13,13 @@ public class Budget
 
     private decimal? totalAmount;
 
-    public Budget() { }
-  
+    public Budget(need, want, saving)
+    {
+        Needs = need;
+        Wants = want;
+        Savings = saving;
+    }
+
     public List<Expense> Expenses {
         get{ return expenses;}
     }

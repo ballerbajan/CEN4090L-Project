@@ -50,15 +50,7 @@ namespace CEN4090L_Project.Services
             // this is creating a new budget each time
             // new code can be added to update existing budget when we have the
             // full budget object
-            var newBudget = new Budget()
-            {
-                Title = title,
-                Category = category,
-                Needs = needs,
-                Wants = wants,
-                Savings = savings
-            };
-
+            var newBudget = new Budget(needs, wants, savings)
             user.Budget = newBudget;
         }
 
