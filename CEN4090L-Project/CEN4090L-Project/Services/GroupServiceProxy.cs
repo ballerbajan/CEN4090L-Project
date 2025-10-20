@@ -22,6 +22,25 @@ namespace CEN4090L_Project.Services
         }
         public GroupServiceProxy() { }
 
+        private static object _lock = new object();
+        private static GroupServiceProxy? instance;
+
+        public static GroupServiceProxy Current 
+        {
+            get
+            {
+                lock (_lock)
+                {
+                    if (instance == null)
+                    {
+                        instance = new GroupServiceProxy();
+                    }
+                }
+
+                return instance;
+            }
+        }
+
         public Group? AddorUpdateGroup(Group? group) { 
             if(group == null)
             {
@@ -42,6 +61,14 @@ namespace CEN4090L_Project.Services
            groups.Remove(group);
            
         }
+
+        //public User? AddOrUpdateUser(User? user) { }
+
+        public void DeleteUser(User? user) { }
+
+        public void SwapGroup(Group? group) { }
+
+        public void SwapUser(User? user) { }
 
        
     }
