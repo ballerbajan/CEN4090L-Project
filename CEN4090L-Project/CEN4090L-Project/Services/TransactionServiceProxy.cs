@@ -38,20 +38,10 @@ namespace CEN4090L_Project.Services
         }
 
         // this should take in a budget object but for now just the fields
-        public bool AddOrUpdateBudget(string title, int category, float amount)
+        public Budget AddOrUpdateBudget(Budget newBud)
         {
-            // for now lets do the budget splitting here
-
-            float needs = amount * .5f; // 50% needs
-            float wants = amount * .3f;
-            float savings = amount * .2f;
-
-            // this will be replaced by the budget object passed in
-            // this is creating a new budget each time
-            // new code can be added to update existing budget when we have the
-            // full budget object
-            var newBudget = new Budget(needs, wants, savings)
-            user.Budget = newBudget;
+            user.Budget = newBud;
+            return user.Budget;
         }
 
         //add desire expense from the list of expenses
