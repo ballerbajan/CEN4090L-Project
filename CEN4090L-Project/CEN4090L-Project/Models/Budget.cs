@@ -13,7 +13,7 @@ public class Budget
 
     private decimal? totalAmount;
 
-    public Budget(need, want, saving)
+    public Budget(decimal need, decimal want, decimal saving)
     {
         Needs = need;
         Wants = want;
