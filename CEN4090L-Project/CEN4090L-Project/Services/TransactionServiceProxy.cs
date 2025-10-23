@@ -18,7 +18,7 @@ namespace CEN4090L_Project.Services
         User user = groupService.Users[0];
 
         // Singleton instance so we have a single proxy throughout the app
-        private static TransactionServiceProxy? instance = null;
+        private static TransactionServiceProxy? instance;
         public static TransactionServiceProxy Current
         {
             get
