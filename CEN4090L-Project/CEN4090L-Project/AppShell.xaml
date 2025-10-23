@@ -11,7 +11,7 @@
     <ShellContent
         Title="Dashboard"
         Icon="{StaticResource IconDashboard}"
-        ContentTemplate="{DataTemplate pages:MainPage}"
+        ContentTemplate="{DataTemplate Views:MainPage}"
         Route="main" />
 
     <ShellContent
@@ -25,6 +25,11 @@
         Icon="{StaticResource IconMeta}"
         ContentTemplate="{DataTemplate pages:ManageMetaPage}"
         Route="manage" />
+    
+    <ShellContent
+        Title="Add Expense"
+        Route="addExpense"
+        ContentTemplate="{DataTemplate Views:AddExpensePage}" />
 
     <Shell.FlyoutFooter>
         <Grid Padding="15">
