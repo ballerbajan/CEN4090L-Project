@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>College Companion - Wireframe</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .wireframe-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            padding: 40px;
+        }
+
+        .screen {
+            background: #f8fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 15px;
+            padding: 20px;
+            min-height: 500px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .screen:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        }
+
+        .screen-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #2d3748;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #4facfe;
+        }
+
+        .mockup-phone {
+            background: #2d3748;
+            border-radius: 25px;
+            padding: 8px;
+            margin: 0 auto;
+            width: 250px;
+            min-height: 400px;
+        }
+
+        .phone-screen {
+            background: white;
+            border-radius: 18px;
+            padding: 15px;
+            height: 100%;
+            overflow-y: auto;
+        }
+
+        .nav-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #e2e8f0;
+            margin-bottom: 15px;
+        }
+
+        .nav-title {
+            font-weight: bold;
+            color: #4facfe;
+        }
+
+        .nav-icon {
+            width: 20px;
+            height: 20px;
+            background: #cbd5e0;
+            border-radius: 3px;
+        }
+
+        .card {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .metric-card {
+            text-align: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+        }
+
+        .metric-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .metric-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .progress-bar {
+            background: #e2e8f0;
+            height: 8px;
+            border-radius: 4px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: #4facfe;
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+
+        .expense-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .expense-category {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .category-icon {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .food { background: #f56565; }
+        .housing { background: #4facfe; }
+        .transport { background: #48bb78; }
+        .entertainment { background: #ed8936; }
+
+        .expense-amount {
+            font-weight: bold;
+            color: #e53e3e;
+        }
+
+        .income-amount {
+            font-weight: bold;
+            color: #38a169;
+        }
+
+        .btn {
+            background: #4facfe;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            margin: 5px 0;
+            transition: background 0.3s ease;
+        }
+
+        .btn:hover {
+            background: #3182ce;
+        }
+
+        .btn-secondary {
+            background: #718096;
+        }
+
+        .btn-secondary:hover {
+            background: #4a5568;
+        }
+
+        .schedule-item {
+            border-left: 4px solid #4facfe;
+            padding-left: 10px;
+            margin-bottom: 10px;
+        }
+
+        .schedule-time {
+            font-size: 0.8rem;
+            color: #718096;
+        }
+
+        .schedule-title {
+            font-weight: bold;
+            margin-bottom: 2px;
+        }
+
+        .group-member {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 0;
+        }
+
+        .avatar {
+            width: 30px;
+            height: 30px;
+            background: #cbd5e0;
+            border-radius: 50%;
+        }
+
+        .tab-bar {
+            display: flex;
+            justify-content: space-around;
+            background: #f7fafc;
+            padding: 10px;
+            margin: 10px -15px -15px -15px;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .tab {
+            text-align: center;
+            padding: 5px;
+            color: #718096;
+            font-size: 0.8rem;
+        }
+
+        .tab.active {
+            color: #4facfe;
+        }
+
+        .tab-icon {
+            width: 20px;
+            height: 20px;
+            background: currentColor;
+            border-radius: 3px;
+            margin: 0 auto 3px;
+            opacity: 0.7;
+        }
+
+        .floating-btn {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background: #4facfe;
+            border-radius: 50%;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(79, 172, 254, 0.4);
+        }
+
+        .notification-badge {
+            background: #e53e3e;
+            color: white;
+            border-radius: 10px;
+            padding: 2px 6px;
+            font-size: 0.7rem;
+            position: absolute;
+            top: -5px;
+            right: -5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>College Companion</h1>
+            <p>Student Finance & Life Management App - Wireframe Design</p>
+        </div>
+
+        <div class="wireframe-grid">
+            <!-- Dashboard Screen -->
+            <div class="screen">
+                <h3 class="screen-title">Dashboard / Home Screen</h3>
+                <div class="mockup-phone">
+                    <div class="phone-screen">
+                        <div class="nav-bar">
+                            <div class="nav-icon"></div>
+                            <div class="nav-title">Dashboard</div>
+                            <div class="nav-icon"></div>
+                        </div>
+
+                        <div class="card metric-card">
+                            <div class="metric-value">$247.50</div>
+                            <div class="metric-label">Available Balance</div>
+                        </div>
+
+                        <div class="card">
+                            <h4 style="margin-bottom: 10px;">This Week's Summary</h4>
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                                <span>Income</span>
+                                <span class="income-amount">+$120.00</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between;">
+                                <span>Expenses</span>
+                                <span class="expense-amount">-$78.50</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 65%;"></div>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <h4 style="margin-bottom: 10px;">Upcoming</h4>
+                            <div class="schedule-item">
+                                <div class="schedule-time">2:00 PM</div>
+                                <div class="schedule-title">Part-time Work</div>
+                            </div>
+                            <div class="schedule-item">
+                                <div class="schedule-time">6:00 PM</div>
+                                <div class="schedule-title">Study Group</div>
+                            </div>
+                        </div>
+
+                        <div class="tab-bar">
+                            <div class="tab active">
+                                <div class="tab-icon"></div>
+                                <div>Home</div>
+                            </div>
+                            <div class="tab">
+                                <div class="tab-icon"></div>
+                                <div>Budget</div>
+                            </div>
+                            <div class="tab">
+                                <div class="tab-icon"></div>
+                                <div>Schedule</div>
+                            </div>
+                            <div class="tab">
+                                <div class="tab-icon"></div>
+                                <div>Groups</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Budget Tracking Screen -->
+            <div class="screen">
+                <h3 class="screen-title">Budget & Expense Tracking</h3>
+                <div class="mockup-phone">
+                    <div class="phone-screen">
+                        <div class="nav-bar">
+                            <div class="nav-icon"></div>
+                            <div class="nav-title">Budget Tracker</div>
+                            <div class="nav-icon"></div>
+                        </div>
+
+                        <div class="card">
+                            <h4 style="margin-bottom: 10px;">Monthly Budget: $800</h4>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 42%;"></div>
+                            </div>
+                            <div style="text-align: center; font-size: 0.9rem; color: #718096;">
+                                $336 spent / $464 remaining
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <h4 style="margin-bottom: 15px;">Categories</h4>
+                            <div class="expense-item">
+                                <div class="expense-category">
+                                    <div class="category-icon food"></div>
+                                    <span>Food & Dining</span>
+                                </div>
+                                <div class="expense-amount">$124.30</div>
+                            </div>
+                            <div class="expense-item">
+                                <div class="expense-category">
+                                    <div class="category-icon housing"></div>
+                                    <span>Housing</span>
+                                </div>
+                                <div class="expense-amount">$150.00</div>
+                            </div>
+                            <div class="expense-item">
+                                <div class="expense-category">
+                                    <div class="category-icon transport"></div>
+                                    <span>Transportation</span>
+                                </div>
+                                <div class="expense-amount">$45.20</div>
+                            </div>
+                            <div class="expense-item">
+                                <div class="expense-category">
+                                    <div class="category-icon entertainment"></div>
+                                    <span>Entertainment</span>
+                                </div>
+                                <div class="expense-amount">$16.50</div>
+                            </div>
+                        </div>
+
+                        <button class="btn">Add Expense</button>
+                        <button class="btn btn-secondary">View Analytics</button>
+
+                        <div class="tab-bar">
+                            <div class="tab">
+                                <div class="tab-icon"></div>
+                                <div>Home</div>
+                            </div>
+                            <div class="tab active">
+                                <div class="tab-icon"></div>
+                                <div>Budget</div>
+                            </div>
+                            <div class="tab">
+                                <div class="tab-icon"></div>
+                                <div>Schedule</div>
+                            </div>
+                            <div class="tab">
+                                <div class="tab-icon"></div>
+                                <div>Groups</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button class="floating-btn">+</button>
+            </div>
+
+            <!-- Schedule & Income Calculator -->
+            <div class="screen">
+                <h3 class="screen-title">Schedule & Income Tracker</h3>
+                <div class="mockup-phone">
+                    <div class="phone-screen">
+                        <div class="nav-bar">
+                            <div class="nav-icon"></div>
+                            <div class="nav-title">My Schedule</div>
+                            <div class="nav-icon"></div>
+                        </div>
+
+                        <div class="card metric-card">
+                            <div class="metric-value">18 hrs</div>
+                            <div class="metric-label">This Week's Work</div>
+                        </div>
+
+                        <div class="card">
+                            <h4 style="margin-bottom: 10px;">Expected Income</h4>
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                                <span>Work (18hrs × $12/hr)</span>
+                                <span class="income-amount">$216.00</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                                <span>Family Support</span>
+                                <span class="income-amount">$100.00</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; font-weight: bold; padding-top: 10px; border-top: 1px solid #e2e8f0;">
+                                <span>Total Expected</span>
+                                <span class="income-amount">$316.00</span>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <h4 style="margin-bottom: 10px;">Today's Schedule</h4>
+                            <div class="schedule-item">
+                                <div class="schedule-time">9:00 AM - 11:00 AM</div>
+                                <div class="schedule-title">Math Class</div>
+                            </div>
+                            <div class="schedule-item">
+                                <div class="schedule-time">2:00 PM - 6:00 PM</div>
+                                <div class="schedule-title">Part-time Job</div>
+                                <div style="font-size: 0.8rem; color: #38a169;">+$48 expected</div>
+                            </div>
+                            <div class="schedule-item">
+                                <div class="schedule-time">7:00 PM - 9:00 PM</div>
+                                <div class="schedule-title">Study Time</div>
+                            </div>
+                        </div>
+
+                        <div class="tab-bar">
+                            <div class="tab">
+                                <div class="tab-icon"></div>
+                                <div>Home</div>
+                            </div>
+                            <div class="tab">
+                                <div class="tab-icon"></div>
+                                <div>Budget</div>
+                            </div>
+                            <div class="tab active">
