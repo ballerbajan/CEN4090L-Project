@@ -64,5 +64,5 @@ CLASS: SavingsGoal
 - ToString() – Formats the goal’s progress neatly for display in the UI.
 
 --------------------------------------------------------------
-/*
+*/
 
