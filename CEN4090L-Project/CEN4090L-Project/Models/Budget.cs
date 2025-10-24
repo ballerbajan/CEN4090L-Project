@@ -11,7 +11,8 @@ public class Budget
 
     public int? Priority { get; set; }
 
-    public List<Expense> Expeneses {
+    public List<Expense> Expenses
+    {
         get
         {
             return expenses;
@@ -24,13 +25,13 @@ public class Budget
         decimal? totalExpenses = 0;
 	    foreach (Expense e in Expenses)
         {
-           totalExpenses += e.amount;
+           totalExpenses += e.Amount;
         }
 		return totalExpenses;
 	}
 
 //returns a list with the specified category
-public static list<Expense>? returnCategory(int id)
+public List<Expense>? returnCategory(int id)
 {
     if (id < 0 && id > 3)
         return null;
@@ -38,7 +39,7 @@ public static list<Expense>? returnCategory(int id)
 
     foreach (Expense e in Expenses)
     {
-      if (e.id == id)
+      if (e.Id == id)
         category.Add(e);
     }
     return category;
@@ -47,13 +48,13 @@ public static list<Expense>? returnCategory(int id)
 //remove desire expense from the list of expenses
 public bool removeExpense(Expense e1)
 {
-    bool removed = 0;
+    bool removed = false;
     foreach (Expense e in Expenses)
     {
         //checks if the expense exiist in the list
-        if (e.title == e1.title)
+        if (e.Title == e1.Title)
         {
-            removed = Expenses.remove(e1);
+            removed = Expenses.Remove(e1);
 
         }
     }
@@ -63,7 +64,7 @@ public bool removeExpense(Expense e1)
 //add desire expense from the list of expenses
 public void addExpense(Expense e)
 {
-    expenses.add(e);
+    Expenses.Add(e);
 }
 
 
