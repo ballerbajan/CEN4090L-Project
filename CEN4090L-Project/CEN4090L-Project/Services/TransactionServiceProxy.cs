@@ -47,19 +47,19 @@ namespace CEN4090L_Project.Services
         //add desire expense from the list of expenses
         public void addExpense(Expense e)
         {
-            expenses.add(e);
+            Expenses.add(e);
         }
 
         //remove desire expense from the list of expenses
-        public bool removeExpense(Expense e1)
+        public bool removeExpense(int id)
         {
             bool removed = 0;
             foreach (Expense e in Expenses)
             {
                 //checks if the expense exiist in the list
-                if (e.title == e1.title)
+                if (id == e.id)
                 {
-                    removed = Expenses.remove(e1);
+                    removed = Expenses.remove(e);
 
                 }
             }
@@ -69,18 +69,18 @@ namespace CEN4090L_Project.Services
         //METHODS
         //helper returns a list with the specified category
         //NOTE: the int ID is gonna be changed for BudgetCategory
-        private static list<Expense>? returnCategory(int id)
+        private static list<Expense>? returnCategory(BudgetCategory category)
         {
-            if (id < 0 && id > 3)
+            if (category == BudgetCategory.Needs || category == BudgetCategory.Savings || category == BudgetCategory.Wants)
                 return null;
-            List<Expense> category = new List<Expense>();
+            List<Expense> categoryList = new List<Expense>();
 
             foreach (Expense e in Expenses)
             {
-                if (e.id == id)
-                    category.Add(e);
+                if (e.Category == category)
+                    categoryList.Add(e);
             }
-            return category;
+            return categoryList;
         }
 
     }
