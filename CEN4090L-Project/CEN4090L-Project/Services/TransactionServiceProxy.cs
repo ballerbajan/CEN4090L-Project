@@ -12,6 +12,7 @@ namespace CEN4090L_Project.Services
     {
         // should be get a singleton inst of group prox and run on that
         private GroupServiceProxy groupService = GroupServiceProxy.Current;
+
         // should be this
         // var user = groupService.currentUser;
         // for now just get the first user
@@ -45,21 +46,21 @@ namespace CEN4090L_Project.Services
         }
 
         //add desire expense from the list of expenses
-        public void addExpense(Expense e)
+        public void addExpense(List<Expense> expenses, Expense e)
         {
-            Expenses.add(e);
+            expenses.add(e);
         }
 
         //remove desire expense from the list of expenses
-        public bool removeExpense(int id)
+        public bool removeExpense(List<Expense> expenses, int id)
         {
             bool removed = 0;
-            foreach (Expense e in Expenses)
+            foreach (Expense e in expenses)
             {
                 //checks if the expense exiist in the list
-                if (id == e.id)
+                if (id == e.Id)
                 {
-                    removed = Expenses.remove(e);
+                    removed = expenses.remove(e);
 
                 }
             }
@@ -68,14 +69,14 @@ namespace CEN4090L_Project.Services
 
         //METHODS
         //helper returns a list with the specified category
-        //NOTE: the int ID is gonna be changed for BudgetCategory
-        private static list<Expense>? returnCategory(BudgetCategory category)
+        //List<Expense> expenses takes either the budget expenses from User or Group expenses
+        private static List<Expense>? returnCategory(List<Expense> expenses, BudgetCategory category)
         {
             if (category == BudgetCategory.Needs || category == BudgetCategory.Savings || category == BudgetCategory.Wants)
                 return null;
             List<Expense> categoryList = new List<Expense>();
 
-            foreach (Expense e in Expenses)
+            foreach (Expense e in expenses)
             {
                 if (e.Category == category)
                     categoryList.Add(e);
