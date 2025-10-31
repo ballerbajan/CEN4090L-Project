@@ -35,7 +35,8 @@ namespace CEN4090L_Project.Services
         private TransactionServiceProxy()
         {
             // testing data
-            user.Budget.Add(new Budget() { Title = "Food", Priority = 1 });
+            AddOrUpdateBudget(new Budget {TotalAmount = 1000, Expenses = new List<Expense>()});
+            user?.Budget?.Expenses.Add(new Expense { Amount = 100, Title = "hello", Category = BudgetCategory.Needs});
         }
 
         // this should take in a budget object but for now just the fields
