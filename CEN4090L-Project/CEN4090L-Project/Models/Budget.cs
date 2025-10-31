@@ -13,6 +13,8 @@ public class Budget
 
     private decimal? totalAmount;
 
+    public Budget(){}
+
     public Budget(decimal need, decimal want, decimal saving)
     {
         Needs = need;
@@ -22,6 +24,7 @@ public class Budget
 
     public List<Expense> Expenses {
         get{ return expenses;}
+        set{ expenses = value; }
     }
 
     private decimal? needs;
