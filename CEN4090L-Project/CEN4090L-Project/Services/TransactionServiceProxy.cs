@@ -52,15 +52,15 @@ namespace CEN4090L_Project.Services
         }
 
         //remove desire expense from the list of expenses
-        public bool removeExpense(List<Expense> expenses, int id)
+        public bool removeExpense(int id)
         {
-            bool removed = 0;
-            foreach (Expense e in expenses)
+            bool removed = false;
+            foreach (Expense e in user?.Budget?.Expenses ?? new List<Expense>())
             {
                 //checks if the expense exiist in the list
                 if (id == e.Id)
                 {
-                    removed = expenses.remove(e);
+                    removed = user?.Budget?.Expenses.Remove(e) ?? false;
 
                 }
             }
