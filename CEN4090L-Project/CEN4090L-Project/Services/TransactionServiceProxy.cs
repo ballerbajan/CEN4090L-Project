@@ -46,9 +46,9 @@ namespace CEN4090L_Project.Services
         }
 
         //add desire expense from the list of expenses
-        public void addExpense(List<Expense> expenses, Expense e)
+        public void addExpense(Expense e)
         {
-            expenses.add(e);
+            user?.Budget?.Expenses.Add(e);
         }
 
         //remove desire expense from the list of expenses
