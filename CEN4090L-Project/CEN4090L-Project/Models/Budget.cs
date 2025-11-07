@@ -1,71 +1,66 @@
+using CEN4090L_Project.Models;
 using System;
 
 public class Budget
 {
-    //list of expense managed by the budget
+    //list of all expense managed by the budget
     private List<Expense> expenses = new List<Expense>();
 
-    public Budget() { }
+    //list for every expense category
+    private List<Expense> needsList = new List<Expense>();
+    private List<Expense> wantsList = new List<Expense>();
+    private List<Expense> savingsList = new List<Expense>();
 
-    public string? Title { get; set; }
+    private decimal? totalAmount;
 
-    public int? Priority { get; set; }
+    public Budget(){}
 
-    public List<Expense> Expenses
+    public Budget(decimal need, decimal want, decimal saving)
     {
-        get
-        {
-            return expenses;
-        }
+        Needs = need;
+        Wants = want;
+        Savings = saving;
     }
 
-    //calculates the total expense per expenses
-    public decimal? totalExpense()
-    {
-        decimal? totalExpenses = 0;
-	    foreach (Expense e in Expenses)
-        {
-           totalExpenses += e.Amount;
-        }
-		return totalExpenses;
-	}
-
-//returns a list with the specified category
-public List<Expense>? returnCategory(int id)
-{
-    if (id < 0 && id > 3)
-        return null;
-    List<Expense> category = new List<Expense>();
-
-    foreach (Expense e in Expenses)
-    {
-      if (e.Id == id)
-        category.Add(e);
+    public List<Expense> Expenses {
+        get{ return expenses;}
+        set{ expenses = value; }
     }
-    return category;
-}
 
-//remove desire expense from the list of expenses
-public bool removeExpense(Expense e1)
-{
-    bool removed = false;
-    foreach (Expense e in Expenses)
+    private decimal? needs;
+  
+    private decimal? wants;
+  
+    private decimal? savings;
+    
+    public decimal? Needs{ get; set;}
+
+    public decimal? Wants{ get; set;}
+
+    public decimal? Savings{ get; set;}
+
+    //calculates the total budget while setting the expenses. Gets the total amount
+    public decimal? TotalAmount
     {
-        //checks if the expense exiist in the list
-        if (e.Title == e1.Title)
+        get 
+        { 
+            return totalAmount; 
+        }
+        set // on set we also want to recalculate the needs, wants, and savings
         {
-            removed = Expenses.Remove(e1);
+            // we nee to check each expense catergory and remove it from needs, wants, or savings
+            needs = value * 0.5m;
 
+            // where returns an IEnumerable so then we run sum on it
+            needs -= expenses.Where(e => e.Category == BudgetCategory.Needs).Sum(e => e.Amount) ?? 0;
+
+            wants = value * 0.3m;
+            wants -= expenses.Where(e => e.Category == BudgetCategory.Wants).Sum(e => e.Amount) ?? 0;
+
+            savings = value * 0.2m;
+            savings -= expenses.Where(e => e.Category == BudgetCategory.Savings).Sum(e => e.Amount) ?? 0;
+
+            totalAmount = value; 
         }
     }
-    return removed;
-}
-
-//add desire expense from the list of expenses
-public void addExpense(Expense e)
-{
-    Expenses.Add(e);
-}
-
-
 }
