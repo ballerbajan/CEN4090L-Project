@@ -31,16 +31,6 @@ namespace CEN4090L_Project.Models
         public decimal PercentComplete =>
             TargetAmount <= 0 ? 0 : Math.Clamp(CurrentAmount / TargetAmount, 0, 1);
 
-        public bool IsActive
-        {
-            get => Status.Equals("Active", StringComparison.OrdinalIgnoreCase);
-            set => Status = value ? "Active" : "Paused";
-        }
-
-        public decimal MonthlyAllocation { get; set; } = 0m;
-
-        public decimal RemainingAmount => TargetAmount - CurrentAmount;
-
         [JsonIgnore]
         public bool IsAchieved => CurrentAmount >= TargetAmount;
 
