@@ -11,12 +11,12 @@ namespace CEN4090L_Project.Services
     public class TransactionServiceProxy
     {
         // should be get a singleton inst of group prox and run on that
-        private GroupServiceProxy groupService = GroupServiceProxy.Current;
+        private static GroupServiceProxy groupService = GroupServiceProxy.Current;
 
         // should be this
         // var user = groupService.currentUser;
         // for now just get the first user
-        private User user = groupService.Users[0];
+        private User user = groupService.CurrentUser ?? new User();
 
         // Singleton instance so we have a single proxy throughout the app
         private static TransactionServiceProxy? instance;
