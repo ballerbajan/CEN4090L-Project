@@ -11,14 +11,15 @@ namespace CEN4090L_Project.Services
     public class TransactionServiceProxy
     {
         // should be get a singleton inst of group prox and run on that
-        private GroupServiceProxy groupService = GroupServiceProxy.Current;
+        private static GroupServiceProxy groupService = GroupServiceProxy.Current;
+
         // should be this
         // var user = groupService.currentUser;
         // for now just get the first user
-        User user = groupService.Users[0];
+        private User user = groupService.CurrentUser ?? new User();
 
         // Singleton instance so we have a single proxy throughout the app
-        private static TransactionServiceProxy? instance = null;
+        private static TransactionServiceProxy? instance;
         public static TransactionServiceProxy Current
         {
             get
@@ -34,7 +35,8 @@ namespace CEN4090L_Project.Services
         private TransactionServiceProxy()
         {
             // testing data
-            user.Budget.Add(new Budget() { Title = "Food", Priority = 1 });
+            AddOrUpdateBudget(new Budget {TotalAmount = 1000, Expenses = new List<Expense>()});
+            user?.Budget?.Expenses.Add(new Expense { Amount = 100, Title = "hello", Category = BudgetCategory.Needs});
         }
 
         // this should take in a budget object but for now just the fields
@@ -47,19 +49,19 @@ namespace CEN4090L_Project.Services
         //add desire expense from the list of expenses
         public void addExpense(Expense e)
         {
-            expenses.add(e);
+            user?.Budget?.Expenses.Add(e);
         }
 
         //remove desire expense from the list of expenses
-        public bool removeExpense(Expense e1)
+        public bool removeExpense(int id)
         {
-            bool removed = 0;
-            foreach (Expense e in Expenses)
+            bool removed = false;
+            foreach (Expense e in user?.Budget?.Expenses ?? new List<Expense>())
             {
                 //checks if the expense exiist in the list
-                if (e.title == e1.title)
+                if (id == e.Id)
                 {
-                    removed = Expenses.remove(e1);
+                    removed = user?.Budget?.Expenses.Remove(e) ?? false;
 
                 }
             }
@@ -68,19 +70,19 @@ namespace CEN4090L_Project.Services
 
         //METHODS
         //helper returns a list with the specified category
-        //NOTE: the int ID is gonna be changed for BudgetCategory
-        private static list<Expense>? returnCategory(int id)
+        //List<Expense> expenses takes either the budget expenses from User or Group expenses
+        private static List<Expense>? returnCategory(List<Expense> expenses, BudgetCategory category)
         {
-            if (id < 0 && id > 3)
+            if (category == BudgetCategory.Needs || category == BudgetCategory.Savings || category == BudgetCategory.Wants)
                 return null;
-            List<Expense> category = new List<Expense>();
+            List<Expense> categoryList = new List<Expense>();
 
-            foreach (Expense e in Expenses)
+            foreach (Expense e in expenses)
             {
-                if (e.id == id)
-                    category.Add(e);
+                if (e.Category == category)
+                    categoryList.Add(e);
             }
-            return category;
+            return categoryList;
         }
 
     }

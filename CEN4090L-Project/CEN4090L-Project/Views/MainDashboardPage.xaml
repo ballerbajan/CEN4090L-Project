@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="CEN4090L_Project.Views.MainDashboardPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:CEN4090L_Project.ViewModels"
+    Title="College Companion">
+
+    <!-- Bind the page to its ViewModel -->
+    <ContentPage.BindingContext>
+        <vm:DashboardViewModel />
+    </ContentPage.BindingContext>
+
+    <!-- Make content scrollable -->
+    <ScrollView>
+        <VerticalStackLayout Spacing="16" Padding="16">
+
+            <!-- ========== TOP SUMMARY CARDS ========== -->
+            <!-- Displays income, expenses, and savings info -->
+            <Grid ColumnDefinitions="*,*,*" ColumnSpacing="12">
+
+                <!-- INCOME CARD -->
+                <Frame Grid.Column="0" Padding="12" CornerRadius="16" HasShadow="True">
+                    <VerticalStackLayout Spacing="4">
+                        <Label Text="Income (Monthly)" FontSize="12" TextColor="#666" />
+                        <Label Text="{Binding Income, StringFormat='${0:F2}'}"
+                               FontSize="20" FontAttributes="Bold" />
+                        <!-- Navigates to Budget Edit Page -->
+                        <Button Text="Edit Budget"
+                                Command="{Binding EditBudgetCommand}"
+                                Padding="8,4" />
+                    </VerticalStackLayout>
+                </Frame>
+
+                <!-- EXPENSES CARD -->
+                <Frame Grid.Column="1" Padding="12" CornerRadius="16" HasShadow="True">
+                    <VerticalStackLayout Spacing="4">
+                        <Label Text="Expenses (Month-to-date)" FontSize="12" TextColor="#666" />
+                        <Label Text="{Binding TotalExpenses, StringFormat='${0:F2}'}"
+                               FontSize="20" FontAttributes="Bold" />
+                        <Label Text="{Binding RemainingThisMonthText}" FontSize="12" />
+                    </VerticalStackLayout>
+                </Frame>
+
+                <!-- SAVINGS CARD -->
+                <Frame Grid.Column="2" Padding="12" CornerRadius="16" HasShadow="True">
+                    <VerticalStackLayout Spacing="4">
+                        <Label Text="Savings Planned" FontSize="12" TextColor="#666" />
+                        <Label Text="{Binding PlannedSavings, StringFormat='${0:F2}'}"
+                               FontSize="20" FontAttributes="Bold" />
+                        <!-- Navigates to Add Expense Form -->
+                        <Button Text="Add Expense"
+                                Command="{Binding AddExpenseCommand}"
+                                Padding="8,4" />
+                    </VerticalStackLayout>
+                </Frame>
+            </Grid>
+
+            <!-- ========== 50/30/20 BUDGET BREAKDOWN ========== -->
+            <Label Text="50/30/20 Budget Breakdown"
+                   FontAttributes="Bold"
+                   FontSize="18" />
+
+            <!-- Each Frame below represents a category card -->
+            <Grid RowSpacing="12">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <!-- NEEDS (50%) CARD -->
+                <Frame Grid.Row="0" Padding="12" CornerRadius="14" HasShadow="True">
+                    <VerticalStackLayout Spacing="6">
+                        <Grid ColumnDefinitions="Auto,*">
+                            <Label Text="Needs (50%)" FontAttributes="Bold" />
+                            <Label Grid.Column="1" HorizontalTextAlignment="End"
+                                   Text="{Binding NeedsRemainingText}" />
+                        </Grid>
+                        <ProgressBar Progress="{Binding NeedsProgress}" HeightRequest="8" />
+                        <Label FontSize="12" Text="{Binding NeedsSpentText}" />
+                    </VerticalStackLayout>
+                </Frame>
+
+                <!-- WANTS (30%) CARD -->
+                <Frame Grid.Row="1" Padding="12" CornerRadius="14" HasShadow="True">
+                    <VerticalStackLayout Spacing="6">
+                        <Grid ColumnDefinitions="Auto,*">
+                            <Label Text="Wants (30%)" FontAttributes="Bold" />
+                            <Label Grid.Column="1" HorizontalTextAlignment="End"
+                                   Text="{Binding WantsRemainingText}" />
+                        </Grid>
+                        <ProgressBar Progress="{Binding WantsProgress}" HeightRequest="8" />
+                        <Label FontSize="12" Text="{Binding WantsSpentText}" />
+                    </VerticalStackLayout>
+                </Frame>
+
+                <!-- SAVINGS (20%) CARD -->
+                <Frame Grid.Row="2" Padding="12" CornerRadius="14" HasShadow="True">
+                    <VerticalStackLayout Spacing="6">
+                        <Grid ColumnDefinitions="Auto,*">
+                            <Label Text="Savings (20%)" FontAttributes="Bold" />
+                            <Label Grid.Column="1" HorizontalTextAlignment="End"
+                                   Text="{Binding SavingsRemainingText}" />
+                        </Grid>
+                        <ProgressBar Progress="{Binding SavingsProgress}" HeightRequest="8" />
+                        <Label FontSize="12" Text="{Binding SavingsSpentText}" />
+                    </VerticalStackLayout>
+                </Frame>
+            </Grid>
+
+            <!-- ========== RECENT EXPENSES SECTION ========== -->
+            <Label Text="Recent Expenses" FontAttributes="Bold" FontSize="18" />
+
+            <!-- Displays the most recent expenses -->
+            <CollectionView ItemsSource="{Binding RecentExpenses}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame Padding="12" CornerRadius="12" HasShadow="False" BorderColor="#ddd">
+                            <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto">
+                                <Label Grid.Row="0" Grid.Column="0"
+                                       Text="{Binding Description}"
+                                       FontAttributes="Bold" />
+                                <Label Grid.Row="0" Grid.Column="1"
+                                       Text="{Binding Amount, StringFormat='${0:F2}'}" />
+                                <Label Grid.Row="1" Grid.Column="0"
+                                       Text="{Binding Category}" FontSize="12" TextColor="#666" />
+                                <Label Grid.Row="1" Grid.Column="1"
+                                       Text="{Binding Date, StringFormat='{0:MMM dd}'}"
+                                       FontSize="12" TextColor="#666" />
+                            </Grid>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+
+                <!-- Message when no expenses are listed -->
+                <CollectionView.EmptyView>
+                    <Label Text="No expenses recorded yet."
+                           HorizontalOptions="Center"
+                           Padding="16" />
+                </CollectionView.EmptyView>
+            </CollectionView>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
