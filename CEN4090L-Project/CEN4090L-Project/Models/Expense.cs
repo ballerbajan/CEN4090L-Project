@@ -7,7 +7,7 @@ public class Expense
 
 	public string? Title { get; set; }
 
-	public int? ID { get; set; }
+	public int? Id { get; set; }
 
 	public decimal? Amount { get; set; }
 
