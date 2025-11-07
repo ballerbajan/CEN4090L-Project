@@ -13,7 +13,8 @@ namespace CEN4090L_Project.ViewModels
 
         public void AddOrUpdateExpense()
         {
-            TransactionServiceProxy.Current.addExpense(Model);
+            //TransactionServiceProxy.Current.addExpense(Model);
+            // need to remove the class declaration from dashboard viewmodel and refactor it
         }
     }
 }
