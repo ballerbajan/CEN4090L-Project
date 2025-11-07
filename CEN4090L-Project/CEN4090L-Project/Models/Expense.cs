@@ -4,7 +4,7 @@ using CEN4090L_Project.Models;
 public class Expense
 {
 	public Expense() {}
-
+	public int Id { get; set; }
 	public string? Title { get; set; }
 
 	public int? Id { get; set; }

@@ -39,7 +39,7 @@ public class Budget
 
     public decimal? Savings{ get; set;}
 
-    //calculates the total expense per expenses
+    //calculates the total budget while setting the expenses. Gets the total amount
     public decimal? TotalAmount
     {
         get 
