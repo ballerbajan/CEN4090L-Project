@@ -19,5 +19,20 @@ namespace CEN4090L_Project.Models
         public int Priority { get; set; } = 3; // scale 1–5
         public string? Category { get; set; }
 
+        public bool IsActive
+        {
+            get => Status.Equals("Active", StringComparison.OrdinalIgnoreCase);
+            set => Status = value ? "Active" : "Paused";
+        }
+
+        public bool IsAchieved
+        {
+            get => Status.Equals("Achieved", StringComparison.OrdinalIgnoreCase);
+        }
+
+        public decimal MonthlyAllocation { get; set; } = 0m;
+
+        public decimal RemainingAmount => TargetAmount - CurrentAmount;
+
     }
 }
