@@ -13,7 +13,12 @@
         Icon="{StaticResource IconDashboard}"
         ContentTemplate="{DataTemplate views:MainDashboardPage}"
         Route="main" />
-
+    
+    <ShellContent
+        Title="Add Expense"
+        Route="addExpense"
+        ContentTemplate="{DataTemplate views:AddExpensePage}" />
+  
     <Shell.FlyoutFooter>
         <Grid Padding="15">
             <sf:SfSegmentedControl x:Name="ThemeSegmentedControl" 
