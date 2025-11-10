@@ -15,8 +15,8 @@
         Route="main" />
     
     <ShellContent
-        Title="Add Expense"
-        Route="addExpense"
+        Title="AddExpensePage"
+        Route="AddExpensePage"
         ContentTemplate="{DataTemplate views:AddExpensePage}" />
   
     <Shell.FlyoutFooter>

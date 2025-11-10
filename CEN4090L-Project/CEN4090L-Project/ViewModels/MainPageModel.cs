@@ -1,6 +1,7 @@
 using CEN4090L_Project.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+//using IntelliJ.Lang.Annotations;
 
 namespace CEN4090L_Project.PageModels
 {
@@ -15,22 +16,22 @@ namespace CEN4090L_Project.PageModels
         private readonly SeedDataService _seedDataService;
 
         [ObservableProperty]
-        private List<CategoryChartData> _todoCategoryData = [];
+        private List<CategoryChartData> _todoCategoryData = new();
 
         [ObservableProperty]
-        private List<Brush> _todoCategoryColors = [];
+        private List<Brush> _todoCategoryColors = new();
 
         [ObservableProperty]
-        private List<ProjectTask> _tasks = [];
+        private List<ProjectTask> _tasks = new();
 
         [ObservableProperty]
-        private List<Project> _projects = [];
+        private List<Project> _projects = new();
 
         [ObservableProperty]
-        bool _isBusy;
+        private bool _isBusy;
 
         [ObservableProperty]
-        bool _isRefreshing;
+        private bool _isRefreshing;
 
         [ObservableProperty]
         private string _today = DateTime.Now.ToString("dddd, MMM d");
@@ -130,7 +131,6 @@ namespace CEN4090L_Project.PageModels
                 _dataLoaded = true;
                 await Refresh();
             }
-            // This means we are being navigated to
             else if (!_isNavigatedTo)
             {
                 await Refresh();
@@ -146,7 +146,11 @@ namespace CEN4090L_Project.PageModels
 
         [RelayCommand]
         private Task AddTask()
-            => Shell.Current.GoToAsync($"task");
+            => Shell.Current.GoToAsync("task");
+
+        [RelayCommand]
+        private Task AddExpense()
+            => Shell.Current.GoToAsync("expense");
 
         [RelayCommand]
         private Task NavigateToProject(Project project)
