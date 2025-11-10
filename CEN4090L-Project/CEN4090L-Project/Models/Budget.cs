@@ -1,32 +1,66 @@
+using CEN4090L_Project.Models;
 using System;
 
 public class Budget
 {
-	//list of expense managed by the budget
+    //list of all expense managed by the budget
     private List<Expense> expenses = new List<Expense>();
 
-    public Budget() { }
+    //list for every expense category
+    private List<Expense> needsList = new List<Expense>();
+    private List<Expense> wantsList = new List<Expense>();
+    private List<Expense> savingsList = new List<Expense>();
 
-	public string? Title { get; set; }
+    private decimal? totalAmount;
 
-	public int? Priority { get; set; }
+    public Budget(){}
 
-	public int? Expeneses { get; set; }
+    public Budget(decimal need, decimal want, decimal saving)
+    {
+        Needs = need;
+        Wants = want;
+        Savings = saving;
+    }
 
-	//calculates the total expense per expenses
-	public int? totalExpense { }
+    public List<Expense> Expenses {
+        get{ return expenses;}
+        set{ expenses = value; }
+    }
 
-	//returns a list with the specified category
-	public list<Expense> returnCategory (int id)
-	{
-	    //goes through the ID and returns list	
-	}
+    private decimal? needs;
+  
+    private decimal? wants;
+  
+    private decimal? savings;
+    
+    public decimal? Needs{ get; set;}
 
-	//remove desire expense from the list of expenses
-	public void removeExpense(Expense e) { }
+    public decimal? Wants{ get; set;}
 
-    //add desire expense from the list of expenses
-    public void addExpense(Expense e) { }
+    public decimal? Savings{ get; set;}
 
+    //calculates the total expense per expenses
+    public decimal? TotalAmount
+    {
+        get 
+        { 
+            return totalAmount; 
+        }
+        set // on set we also want to recalculate the needs, wants, and savings
+        {
+            // we nee to check each expense catergory and remove it from needs, wants, or savings
+            needs = value * 0.5m;
 
+            // where returns an IEnumerable so then we run sum on it
+            needs -= expenses.Where(e => e.Category == BudgetCategory.Needs).Sum(e => e.Amount) ?? 0;
+
+            wants = value * 0.3m;
+            wants -= expenses.Where(e => e.Category == BudgetCategory.Wants).Sum(e => e.Amount) ?? 0;
+
+            savings = value * 0.2m;
+            savings -= expenses.Where(e => e.Category == BudgetCategory.Savings).Sum(e => e.Amount) ?? 0;
+
+            totalAmount = value; 
+        }
+    }
 }
