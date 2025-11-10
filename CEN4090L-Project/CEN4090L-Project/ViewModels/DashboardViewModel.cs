@@ -1,6 +1,7 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using CEN4090L_Project.Views;
 
 namespace CEN4090L_Project.ViewModels
 {
@@ -85,10 +86,13 @@ namespace CEN4090L_Project.ViewModels
             Application.Current?.MainPage?.DisplayAlert("Edit Budget", "Navigate to Budget Setup/Edit Page.", "OK");
         }
 
-        private void OnAddExpense()
+        private async void OnAddExpense()
         {
             // TODO: navigate to Add Expense Form (Issue #19)
-            Application.Current?.MainPage?.DisplayAlert("Add Expense", "Navigate to Add Expense Form.", "OK");
+            await Application.Current.MainPage.Navigation.PushAsync(new AddExpensePage());
+            //Application.Current?.MainPage?.DisplayAlert("Add Expense", "Navigate to Add Expense Form.", "OK");
+
+
         }
 
         // recompute when income/expenses change
@@ -129,5 +133,23 @@ namespace CEN4090L_Project.ViewModels
         }
         protected void OnPropertyChanged([CallerMemberName] string? name = null)
             => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+
+        private async Task AddExpense()
+        {
+            try
+            {
+                await Shell.Current.GoToAsync(nameof(AddExpensePage));
+            }
+            catch (Exception ex)
+            {
+                await Application.Current.MainPage.DisplayAlert(
+                    "Navigation Error",
+                    $"Could not navigate to Add Expense page: {ex.Message}",
+                    "OK"
+                );
+            }
+        }
+
+
     }
 }

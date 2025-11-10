@@ -78,8 +78,35 @@
             </pullToRefresh:SfPullToRefresh.PullableContent>
         </pullToRefresh:SfPullToRefresh>
 
-        <controls:AddButton 
-            IsEnabled="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}"
-            Command="{Binding AddTaskCommand}" />
+        <!-- Floating Action Buttons -->
+        <HorizontalStackLayout 
+            HorizontalOptions="End" 
+            VerticalOptions="End" 
+            Margin="20"
+            Spacing="15">
+
+            <!-- Add Expense Button - Using Event Handler -->
+            <Button 
+                Text="Add Expense"
+                Command="{Binding AddExpenseCommand}"
+                HeightRequest="56"
+                WidthRequest="200"
+                CornerRadius="12"
+                BackgroundColor="{StaticResource Primary}"
+                TextColor="White"
+                FontAttributes="Bold"
+                FontSize="18"
+                IsEnabled="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}">
+                        <Button.Shadow>
+                            <Shadow Brush="Black" Opacity="0.3" Radius="8" Offset="0,4" />
+                        </Button.Shadow>
+            </Button>
+
+
+            <!-- Add Task Button -->
+            <controls:AddButton 
+                IsEnabled="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}"
+                Command="{Binding AddTaskCommand}" />
+        </HorizontalStackLayout>
     </Grid>
 </ContentPage>

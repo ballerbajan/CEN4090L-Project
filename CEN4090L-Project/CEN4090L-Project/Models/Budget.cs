@@ -1,19 +1,24 @@
 using CEN4090L_Project.Models;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 public class Budget
 {
-    //list of all expense managed by the budget
+    // List of all expense managed by the budget
     private List<Expense> expenses = new List<Expense>();
 
-    //list for every expense category
+    // List for every expense category
     private List<Expense> needsList = new List<Expense>();
     private List<Expense> wantsList = new List<Expense>();
     private List<Expense> savingsList = new List<Expense>();
 
     private decimal? totalAmount;
+    private decimal? needs;
+    private decimal? wants;
+    private decimal? savings;
 
-    public Budget(){}
+    public Budget() { }
 
     public Budget(decimal need, decimal want, decimal saving)
     {
@@ -22,35 +27,49 @@ public class Budget
         Savings = saving;
     }
 
-    public List<Expense> Expenses {
-        get{ return expenses;}
-        set{ expenses = value; }
+    public List<Expense> Expenses
+    {
+        get { return expenses; }
+        set { expenses = value; }
     }
 
-    private decimal? needs;
-  
-    private decimal? wants;
-  
-    private decimal? savings;
-    
-    public decimal? Needs{ get; set;}
+    public decimal? Needs { get; set; }
+    public decimal? Wants { get; set; }
+    public decimal? Savings { get; set; }
 
-    public decimal? Wants{ get; set;}
+    // ADD THESE NEW PROPERTIES for UI display:
 
-    public decimal? Savings{ get; set;}
+    // Spent amounts (calculated from expenses)
+    public decimal NeedsSpent =>
+        expenses?.Where(e => e.Category == BudgetCategory.Needs).Sum(e => e.Amount ?? 0) ?? 0;
 
-    //calculates the total budget while setting the expenses. Gets the total amount
+    public decimal WantsSpent =>
+        expenses?.Where(e => e.Category == BudgetCategory.Wants).Sum(e => e.Amount ?? 0) ?? 0;
+
+    public decimal SavingsSpent =>
+        expenses?.Where(e => e.Category == BudgetCategory.Savings).Sum(e => e.Amount ?? 0) ?? 0;
+
+    // Remaining amounts
+    public decimal NeedsRemaining => (Needs ?? 0) - NeedsSpent;
+    public decimal WantsRemaining => (Wants ?? 0) - WantsSpent;
+    public decimal SavingsRemaining => (Savings ?? 0) - SavingsSpent;
+
+    // Allocated amounts (for display)
+    public decimal NeedsAllocated => Needs ?? 0;
+    public decimal WantsAllocated => Wants ?? 0;
+    public decimal SavingsAllocated => Savings ?? 0;
+
+    // Calculates the total budget while setting the expenses. Gets the total amount
     public decimal? TotalAmount
     {
-        get 
-        { 
-            return totalAmount; 
+        get
+        {
+            return totalAmount;
         }
         set // on set we also want to recalculate the needs, wants, and savings
         {
-            // we nee to check each expense catergory and remove it from needs, wants, or savings
+            // we need to check each expense category and remove it from needs, wants, or savings
             needs = value * 0.5m;
-
             // where returns an IEnumerable so then we run sum on it
             needs -= expenses.Where(e => e.Category == BudgetCategory.Needs).Sum(e => e.Amount) ?? 0;
 
@@ -60,7 +79,7 @@ public class Budget
             savings = value * 0.2m;
             savings -= expenses.Where(e => e.Category == BudgetCategory.Savings).Sum(e => e.Amount) ?? 0;
 
-            totalAmount = value; 
+            totalAmount = value;
         }
     }
 }

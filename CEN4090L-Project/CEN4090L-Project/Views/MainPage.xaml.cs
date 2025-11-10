@@ -10,5 +10,10 @@ namespace CEN4090L_Project.Pages
             InitializeComponent();
             BindingContext = model;
         }
+
+        private async void AddExpenseClicked(object sender, EventArgs e)
+        {
+            await Shell.Current.GoToAsync("AddExpensePage");
+        }
     }
 }
