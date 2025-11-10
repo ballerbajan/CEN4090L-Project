@@ -79,6 +79,12 @@ build_metadata.AdditionalFiles.ManifestResourceName = CEN4090L_Project.Views.Con
 build_metadata.AdditionalFiles.TargetPath = Views\Controls\TaskView.xaml
 build_metadata.AdditionalFiles.RelativePath = Views\Controls\TaskView.xaml
 
+[C:/Users/gcc01/source/repos/cen4090lproj/CEN4090L-Project/CEN4090L-Project/Views/MainDashboardPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = CEN4090L_Project.Views.MainDashboardPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\MainDashboardPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\MainDashboardPage.xaml
+
 [C:/Users/gcc01/source/repos/cen4090lproj/CEN4090L-Project/CEN4090L-Project/Views/MainPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = CEN4090L_Project.Views.MainPage.xaml
