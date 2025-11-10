@@ -2463,6 +2463,16 @@
             "related": ".aar;.pdb;.xml"
           }
         }
+      },
+      "CollegeCompanion.Library/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "compile": {
+          "bin/placeholder/CollegeCompanion.Library.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/CollegeCompanion.Library.dll": {}
+        }
       }
     },
     "net9.0-android35.0/android-arm64": {
@@ -4926,6 +4936,16 @@
           "lib/net8.0-android34.0/Xamarin.KotlinX.Serialization.Core.Jvm.dll": {
             "related": ".aar;.pdb;.xml"
           }
+        }
+      },
+      "CollegeCompanion.Library/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "compile": {
+          "bin/placeholder/CollegeCompanion.Library.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/CollegeCompanion.Library.dll": {}
         }
       }
     },
@@ -7391,6 +7411,16 @@
             "related": ".aar;.pdb;.xml"
           }
         }
+      },
+      "CollegeCompanion.Library/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "compile": {
+          "bin/placeholder/CollegeCompanion.Library.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/CollegeCompanion.Library.dll": {}
+        }
       }
     },
     "net9.0-android35.0/iossimulator-x64": {
@@ -9854,6 +9884,16 @@
           "lib/net8.0-android34.0/Xamarin.KotlinX.Serialization.Core.Jvm.dll": {
             "related": ".aar;.pdb;.xml"
           }
+        }
+      },
+      "CollegeCompanion.Library/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "compile": {
+          "bin/placeholder/CollegeCompanion.Library.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/CollegeCompanion.Library.dll": {}
         }
       }
     },
@@ -12319,6 +12359,16 @@
             "related": ".aar;.pdb;.xml"
           }
         }
+      },
+      "CollegeCompanion.Library/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "compile": {
+          "bin/placeholder/CollegeCompanion.Library.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/CollegeCompanion.Library.dll": {}
+        }
       }
     },
     "net9.0-android35.0/win10-x64": {
@@ -14783,6 +14833,16 @@
             "related": ".aar;.pdb;.xml"
           }
         }
+      },
+      "CollegeCompanion.Library/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "compile": {
+          "bin/placeholder/CollegeCompanion.Library.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/CollegeCompanion.Library.dll": {}
+        }
       }
     },
     "net9.0-ios26.0": {
@@ -15319,6 +15379,16 @@
           "ref/net6.0/System.Runtime.InteropServices.dll": {
             "related": ".xml"
           }
+        }
+      },
+      "CollegeCompanion.Library/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "compile": {
+          "bin/placeholder/CollegeCompanion.Library.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/CollegeCompanion.Library.dll": {}
         }
       }
     },
@@ -15857,6 +15927,16 @@
             "related": ".xml"
           }
         }
+      },
+      "CollegeCompanion.Library/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "compile": {
+          "bin/placeholder/CollegeCompanion.Library.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/CollegeCompanion.Library.dll": {}
+        }
       }
     },
     "net9.0-ios26.0/android-x64": {
@@ -16393,6 +16473,16 @@
           "ref/net6.0/System.Runtime.InteropServices.dll": {
             "related": ".xml"
           }
+        }
+      },
+      "CollegeCompanion.Library/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "compile": {
+          "bin/placeholder/CollegeCompanion.Library.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/CollegeCompanion.Library.dll": {}
         }
       }
     },
@@ -16931,6 +17021,16 @@
             "related": ".xml"
           }
         }
+      },
+      "CollegeCompanion.Library/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "compile": {
+          "bin/placeholder/CollegeCompanion.Library.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/CollegeCompanion.Library.dll": {}
+        }
       }
     },
     "net9.0-ios26.0/maccatalyst-x64": {
@@ -17468,6 +17568,16 @@
             "related": ".xml"
           }
         }
+      },
+      "CollegeCompanion.Library/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "compile": {
+          "bin/placeholder/CollegeCompanion.Library.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/CollegeCompanion.Library.dll": {}
+        }
       }
     },
     "net9.0-ios26.0/win10-x64": {
@@ -18004,6 +18114,16 @@
           "ref/net6.0/System.Runtime.InteropServices.dll": {
             "related": ".xml"
           }
+        }
+      },
+      "CollegeCompanion.Library/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "compile": {
+          "bin/placeholder/CollegeCompanion.Library.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/CollegeCompanion.Library.dll": {}
         }
       }
     },
@@ -18632,6 +18752,16 @@
         "runtime": {
           "lib/netcoreapp2.1/_._": {}
         }
+      },
+      "CollegeCompanion.Library/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "compile": {
+          "bin/placeholder/CollegeCompanion.Library.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/CollegeCompanion.Library.dll": {}
+        }
       }
     },
     "net9.0-maccatalyst26.0/android-arm64": {
@@ -19175,6 +19305,16 @@
         },
         "runtime": {
           "lib/netcoreapp2.1/_._": {}
+        }
+      },
+      "CollegeCompanion.Library/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "compile": {
+          "bin/placeholder/CollegeCompanion.Library.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/CollegeCompanion.Library.dll": {}
         }
       }
     },
@@ -19720,6 +19860,16 @@
         "runtime": {
           "lib/netcoreapp2.1/_._": {}
         }
+      },
+      "CollegeCompanion.Library/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "compile": {
+          "bin/placeholder/CollegeCompanion.Library.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/CollegeCompanion.Library.dll": {}
+        }
       }
     },
     "net9.0-maccatalyst26.0/iossimulator-x64": {
@@ -20260,6 +20410,16 @@
         },
         "runtime": {
           "lib/netcoreapp2.1/_._": {}
+        }
+      },
+      "CollegeCompanion.Library/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "compile": {
+          "bin/placeholder/CollegeCompanion.Library.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/CollegeCompanion.Library.dll": {}
         }
       }
     },
@@ -20805,6 +20965,16 @@
         "runtime": {
           "lib/netcoreapp2.1/_._": {}
         }
+      },
+      "CollegeCompanion.Library/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "compile": {
+          "bin/placeholder/CollegeCompanion.Library.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/CollegeCompanion.Library.dll": {}
+        }
       }
     },
     "net9.0-maccatalyst26.0/win10-x64": {
@@ -21345,6 +21515,16 @@
         },
         "runtime": {
           "lib/netcoreapp2.1/_._": {}
+        }
+      },
+      "CollegeCompanion.Library/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "compile": {
+          "bin/placeholder/CollegeCompanion.Library.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/CollegeCompanion.Library.dll": {}
         }
       }
     },
@@ -22245,6 +22425,16 @@
             "rid": "win"
           }
         }
+      },
+      "CollegeCompanion.Library/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "compile": {
+          "bin/placeholder/CollegeCompanion.Library.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/CollegeCompanion.Library.dll": {}
+        }
       }
     },
     "net9.0-windows10.0.19041/android-arm64": {
@@ -22992,6 +23182,16 @@
         },
         "build": {
           "buildTransitive/net6.0/_._": {}
+        }
+      },
+      "CollegeCompanion.Library/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "compile": {
+          "bin/placeholder/CollegeCompanion.Library.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/CollegeCompanion.Library.dll": {}
         }
       }
     },
@@ -23741,6 +23941,16 @@
         "build": {
           "buildTransitive/net6.0/_._": {}
         }
+      },
+      "CollegeCompanion.Library/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "compile": {
+          "bin/placeholder/CollegeCompanion.Library.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/CollegeCompanion.Library.dll": {}
+        }
       }
     },
     "net9.0-windows10.0.19041/iossimulator-x64": {
@@ -24485,6 +24695,16 @@
         },
         "build": {
           "buildTransitive/net6.0/_._": {}
+        }
+      },
+      "CollegeCompanion.Library/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "compile": {
+          "bin/placeholder/CollegeCompanion.Library.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/CollegeCompanion.Library.dll": {}
         }
       }
     },
@@ -25233,6 +25453,16 @@
         },
         "build": {
           "buildTransitive/net6.0/_._": {}
+        }
+      },
+      "CollegeCompanion.Library/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "compile": {
+          "bin/placeholder/CollegeCompanion.Library.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/CollegeCompanion.Library.dll": {}
         }
       }
     },
@@ -25991,6 +26221,16 @@
         },
         "build": {
           "buildTransitive/net6.0/_._": {}
+        }
+      },
+      "CollegeCompanion.Library/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "compile": {
+          "bin/placeholder/CollegeCompanion.Library.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/CollegeCompanion.Library.dll": {}
         }
       }
     }
@@ -30319,10 +30559,16 @@
         "xamarin.kotlinx.serialization.core.jvm.1.7.3.4.nupkg.sha512",
         "xamarin.kotlinx.serialization.core.jvm.nuspec"
       ]
+    },
+    "CollegeCompanion.Library/1.0.0": {
+      "type": "project",
+      "path": "../CollegeCompanion.Library/CollegeCompanion.Library.csproj",
+      "msbuildProject": "../CollegeCompanion.Library/CollegeCompanion.Library.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net9.0-android35.0": [
+      "CollegeCompanion.Library >= 1.0.0",
       "CommunityToolkit.Maui >= 9.1.0",
       "CommunityToolkit.Mvvm >= 8.3.2",
       "Microsoft.Data.Sqlite.Core >= 8.0.8",
@@ -30333,6 +30579,7 @@
       "Syncfusion.Maui.Toolkit >= 1.0.4"
     ],
     "net9.0-ios26.0": [
+      "CollegeCompanion.Library >= 1.0.0",
       "CommunityToolkit.Maui >= 9.1.0",
       "CommunityToolkit.Mvvm >= 8.3.2",
       "Microsoft.Data.Sqlite.Core >= 8.0.8",
@@ -30343,6 +30590,7 @@
       "Syncfusion.Maui.Toolkit >= 1.0.4"
     ],
     "net9.0-maccatalyst26.0": [
+      "CollegeCompanion.Library >= 1.0.0",
       "CommunityToolkit.Maui >= 9.1.0",
       "CommunityToolkit.Mvvm >= 8.3.2",
       "Microsoft.Data.Sqlite.Core >= 8.0.8",
@@ -30353,6 +30601,7 @@
       "Syncfusion.Maui.Toolkit >= 1.0.4"
     ],
     "net9.0-windows10.0.19041": [
+      "CollegeCompanion.Library >= 1.0.0",
       "CommunityToolkit.Maui >= 9.1.0",
       "CommunityToolkit.Mvvm >= 8.3.2",
       "Microsoft.Data.Sqlite.Core >= 8.0.8",
@@ -30363,24 +30612,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\gcc01\\.nuget\\packages\\": {},
+    "C:\\Users\\balle\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\gcc01\\source\\repos\\cen4090lproj\\CEN4090L-Project\\CEN4090L-Project\\CEN4090L-Project.csproj",
+      "projectUniqueName": "C:\\HardDocuments\\Classes\\CEN4020+CEN4090L\\Project Stuff\\CEN4090L-Project\\CEN4090L-Project\\CEN4090L-Project\\CEN4090L-Project.csproj",
       "projectName": "CEN4090L-Project",
-      "projectPath": "C:\\Users\\gcc01\\source\\repos\\cen4090lproj\\CEN4090L-Project\\CEN4090L-Project\\CEN4090L-Project.csproj",
-      "packagesPath": "C:\\Users\\gcc01\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\gcc01\\source\\repos\\cen4090lproj\\CEN4090L-Project\\CEN4090L-Project\\obj\\",
+      "projectPath": "C:\\HardDocuments\\Classes\\CEN4020+CEN4090L\\Project Stuff\\CEN4090L-Project\\CEN4090L-Project\\CEN4090L-Project\\CEN4090L-Project.csproj",
+      "packagesPath": "C:\\Users\\balle\\.nuget\\packages\\",
+      "outputPath": "C:\\HardDocuments\\Classes\\CEN4020+CEN4090L\\Project Stuff\\CEN4090L-Project\\CEN4090L-Project\\CEN4090L-Project\\obj\\",
       "projectStyle": "PackageReference",
       "crossTargeting": true,
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\gcc01\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\balle\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -30398,19 +30647,35 @@
       "frameworks": {
         "net9.0-android35.0": {
           "targetAlias": "net9.0-android",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\HardDocuments\\Classes\\CEN4020+CEN4090L\\Project Stuff\\CEN4090L-Project\\CEN4090L-Project\\CollegeCompanion.Library\\CollegeCompanion.Library.csproj": {
+              "projectPath": "C:\\HardDocuments\\Classes\\CEN4020+CEN4090L\\Project Stuff\\CEN4090L-Project\\CEN4090L-Project\\CollegeCompanion.Library\\CollegeCompanion.Library.csproj"
+            }
+          }
         },
         "net9.0-ios26.0": {
           "targetAlias": "net9.0-ios",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\HardDocuments\\Classes\\CEN4020+CEN4090L\\Project Stuff\\CEN4090L-Project\\CEN4090L-Project\\CollegeCompanion.Library\\CollegeCompanion.Library.csproj": {
+              "projectPath": "C:\\HardDocuments\\Classes\\CEN4020+CEN4090L\\Project Stuff\\CEN4090L-Project\\CEN4090L-Project\\CollegeCompanion.Library\\CollegeCompanion.Library.csproj"
+            }
+          }
         },
         "net9.0-maccatalyst26.0": {
           "targetAlias": "net9.0-maccatalyst",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\HardDocuments\\Classes\\CEN4020+CEN4090L\\Project Stuff\\CEN4090L-Project\\CEN4090L-Project\\CollegeCompanion.Library\\CollegeCompanion.Library.csproj": {
+              "projectPath": "C:\\HardDocuments\\Classes\\CEN4020+CEN4090L\\Project Stuff\\CEN4090L-Project\\CEN4090L-Project\\CollegeCompanion.Library\\CollegeCompanion.Library.csproj"
+            }
+          }
         },
         "net9.0-windows10.0.19041": {
           "targetAlias": "net9.0-windows10.0.19041.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\HardDocuments\\Classes\\CEN4020+CEN4090L\\Project Stuff\\CEN4090L-Project\\CEN4090L-Project\\CollegeCompanion.Library\\CollegeCompanion.Library.csproj": {
+              "projectPath": "C:\\HardDocuments\\Classes\\CEN4020+CEN4090L\\Project Stuff\\CEN4090L-Project\\CEN4090L-Project\\CollegeCompanion.Library\\CollegeCompanion.Library.csproj"
+            }
+          }
         }
       },
       "warningProperties": {
