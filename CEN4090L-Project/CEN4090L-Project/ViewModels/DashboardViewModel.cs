@@ -16,8 +16,8 @@ namespace CEN4090L_Project.ViewModels
     public class DashboardViewModel : INotifyPropertyChanged
     {
         // ----- backing fields -----
-        private decimal _income = 1200m;           // monthly income (sample)
-        private decimal _plannedSavings = 240m;    // 20% of income by default
+        private decimal _income = 0m;           // no default value - user must enter
+        private decimal _plannedSavings = 0m;   // no default value - user must enter
         private ObservableCollection<Expense> _recent = new();
 
         // 50/30/20 allocations
@@ -72,16 +72,8 @@ namespace CEN4090L_Project.ViewModels
 
         public DashboardViewModel()
         {
-            // sample data so the page looks alive; replace with services later
-            RecentExpenses = new ObservableCollection<Expense>
-            {
-                new Expense { Description="Rent", Category="Needs", Amount=550m, Date=DateTime.Today.AddDays(-10) },
-                new Expense { Description="Groceries", Category="Needs", Amount=85.42m, Date=DateTime.Today.AddDays(-2) },
-                new Expense { Description="Movie Night", Category="Wants", Amount=16.00m, Date=DateTime.Today.AddDays(-1) },
-                new Expense { Description="Savings Transfer", Category="Savings", Amount=100.00m, Date=DateTime.Today.AddDays(-5) }
-            };
-
-            PlannedSavings = SavingsBudget; // default plan to 20%
+            // Initialize with empty collection - user will add their own expenses
+            RecentExpenses = new ObservableCollection<Expense>();
 
             EditBudgetCommand = new Command(OnEditBudget);
             AddExpenseCommand = new Command(OnAddExpense);

@@ -1,4 +1,6 @@
 // Group.cs
+using CEN4090L_Project.Models;
+
 namespace BudgetApp
 {
     public class Group
@@ -37,5 +39,7 @@ namespace BudgetApp
             SavingsGoal = savingsGoal;
             Budget = budget;
         }
+
+        public List<User>? UserList { get; set; }
     }
 }

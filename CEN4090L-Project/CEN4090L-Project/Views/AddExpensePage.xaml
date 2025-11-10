@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CEN4090L_Project.Views.AddExpensePage"
+             Title="AddExpensePage">
+    <VerticalStackLayout Padding="20" Spacing="15">
+
+        <Label Text="Title" FontAttributes="Bold"/>
+        <Entry Placeholder="Enter expense title"
+               Text="{Binding Model.Title}" />
+
+        <Label Text="Amount" FontAttributes="Bold"/>
+        <Entry Placeholder="Enter amount"
+               Keyboard="Numeric"
+               Text="{Binding Model.Amount}" />
+
+        <Label Text="Category" FontAttributes="Bold"/>
+        <Entry Placeholder="Enter a category" 
+               Keyboard="Numeric"
+               Text="{Binding Model.Category}"/>
+
+        <Button Text="Save Expense"/>
+    </VerticalStackLayout>
+</ContentPage>
