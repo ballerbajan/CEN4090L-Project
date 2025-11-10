@@ -2,18 +2,10 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using CEN4090L_Project.Views;
+using CEN4090L_Project.Models;
 
 namespace CEN4090L_Project.ViewModels
 {
-    // --- simple models used by the dashboard ---
-    public class Expense
-    {
-        public string Description { get; set; } = string.Empty;
-        public string Category { get; set; } = "Needs"; // Needs/Wants/Savings
-        public decimal Amount { get; set; }
-        public DateTime Date { get; set; } = DateTime.Now;
-    }
-
     public class DashboardViewModel : INotifyPropertyChanged
     {
         // ----- backing fields -----
@@ -41,9 +33,9 @@ namespace CEN4090L_Project.ViewModels
         }
 
         // computed totals
-        public decimal TotalNeeds => RecentExpenses.Where(e => e.Category == "Needs").Sum(e => e.Amount);
-        public decimal TotalWants => RecentExpenses.Where(e => e.Category == "Wants").Sum(e => e.Amount);
-        public decimal TotalSavingsSpent => RecentExpenses.Where(e => e.Category == "Savings").Sum(e => e.Amount);
+        public decimal TotalNeeds => RecentExpenses.Where(e => e.Needs == "Needs").Sum(e => e.Amount);
+        public decimal TotalWants => RecentExpenses.Where(e => e.Wants == "Wants").Sum(e => e.Amount);
+        public decimal TotalSavingsSpent => RecentExpenses.Where(e => e.Savings == "Savings").Sum(e => e.Amount);
         public decimal TotalExpenses => TotalNeeds + TotalWants + TotalSavingsSpent;
 
         // allocation targets
