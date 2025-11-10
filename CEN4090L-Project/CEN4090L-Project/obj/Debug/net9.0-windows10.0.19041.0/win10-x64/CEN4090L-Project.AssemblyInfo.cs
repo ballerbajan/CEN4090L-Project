@@ -18,7 +18,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CEN4090L-Project")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0+18f050fdfe2729e39e65e1145d5148584280888b")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0+120e7c018d33b93aa0cafb5db924937e2f04ee29")]
 [assembly: System.Reflection.AssemblyProductAttribute("CEN4090L-Project")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CEN4090L-Project")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

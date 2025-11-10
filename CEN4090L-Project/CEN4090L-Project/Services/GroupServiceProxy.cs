@@ -79,15 +79,33 @@ namespace CEN4090L_Project.Services
         }
 
 
-        public Group? AddorUpdateGroup(Group? group) { 
-            if(group == null)
+        public Group? AddorUpdateGroup(Group? group)
+        {
+            if (group == null)
             {
                 return group;
             }
-            var newGroup = group.ID == 0;
-      
-            return group;
+            if (group.ID == 0)
+            {
+                groups.Add(group);
+                return group;
+            }
+            else
+            {
+                var existingGroup = groups.FirstOrDefault(g => g.ID == group.ID);
+                if (existingGroup != null)
+                {
+                    var Index = groups.IndexOf(existingGroup);
+                    groups.RemoveAt(Index);
+                    groups.Insert(Index, existingGroup);
+                    return group;
+                }
+                groups.Add(group);
+                return group;
+                
+            }
         }
+        
 
         public void DeleteGroup(Group? group) {
 
@@ -131,16 +149,34 @@ namespace CEN4090L_Project.Services
 
         }
 
-        public void DeleteUser(User? user) { }
+        public void DeleteUser(User? user) {
+            if (user == null) {
+                return;
+            }
+
+            currentGroup?.UserList?.Remove(user);
+
+        }
 
         public void SwapGroup(Group? group)
         {
-            CurrentGroup = group;
+            if (group?.ID != null)
+            {
+                CurrentGroup = group;
+            }
+
+            return;
+           
         }
 
         public void SwapUser(User? user)
         {
-            CurrentUser = user;
+            var existinguser = currentGroup?.UserList?.FirstOrDefault(u => u.Id == user?.Id);
+            if(existinguser != null) 
+            {
+                CurrentUser = user;
+            }
+            return;
         }
 
        
