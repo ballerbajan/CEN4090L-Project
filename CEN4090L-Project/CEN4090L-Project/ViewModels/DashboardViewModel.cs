@@ -33,10 +33,10 @@ namespace CEN4090L_Project.ViewModels
         }
 
         // computed totals
-        public decimal TotalNeeds => RecentExpenses.Where(e => e.Needs == "Needs").Sum(e => e.Amount);
-        public decimal TotalWants => RecentExpenses.Where(e => e.Wants == "Wants").Sum(e => e.Amount);
-        public decimal TotalSavingsSpent => RecentExpenses.Where(e => e.Savings == "Savings").Sum(e => e.Amount);
-        public decimal TotalExpenses => TotalNeeds + TotalWants + TotalSavingsSpent;
+        public decimal? TotalNeeds => RecentExpenses.Where(e => e.Category == BudgetCategory.Needs).Sum(e => e.Amount);
+        public decimal? TotalWants => RecentExpenses.Where(e => e.Category == BudgetCategory.Wants).Sum(e => e.Amount);
+        public decimal? TotalSavingsSpent => RecentExpenses.Where(e => e.Category == BudgetCategory.Savings).Sum(e => e.Amount);
+        public decimal? TotalExpenses => TotalNeeds + TotalWants + TotalSavingsSpent;
 
         // allocation targets
         public decimal NeedsBudget => Math.Round(Income * 0.50m, 2);
@@ -44,9 +44,9 @@ namespace CEN4090L_Project.ViewModels
         public decimal SavingsBudget => Math.Round(Income * 0.20m, 2);
 
         // progress 0..1
-        public double NeedsProgress => (double)Math.Clamp(NeedsBudget == 0 ? 0 : TotalNeeds / NeedsBudget, 0, 1);
-        public double WantsProgress => (double)Math.Clamp(WantsBudget == 0 ? 0 : TotalWants / WantsBudget, 0, 1);
-        public double SavingsProgress => (double)Math.Clamp(SavingsBudget == 0 ? 0 : TotalSavingsSpent / SavingsBudget, 0, 1);
+        public double NeedsProgress => (double)Math.Clamp((NeedsBudget == 0 ? 0m : TotalNeeds / NeedsBudget ?? 0m), 0, 1);
+        public double WantsProgress => (double)Math.Clamp((WantsBudget == 0 ? 0m : TotalWants / WantsBudget ?? 0m), 0, 1);
+        public double SavingsProgress => (double)Math.Clamp((SavingsBudget == 0 ? 0m : TotalSavingsSpent / SavingsBudget ?? 0m), 0, 1);
 
         // display strings
         public string NeedsSpentText => $"Spent {TotalNeeds:C} / {NeedsBudget:C}";
