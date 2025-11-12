@@ -12,11 +12,9 @@ namespace CEN4090L_Project.Services
     {
         // should be get a singleton inst of group prox and run on that
         private static GroupServiceProxy? groupService;
-
-        // should be this
-        // var user = groupService.currentUser;
-        // for now just get the first user
-        private User user = groupService?.CurrentUser ?? new User();
+        private static SavingsGoalService _savingsService = new SavingsGoalService();
+        // get the user from group service
+        public User? CurrentUser => GroupServiceProxy.Current.CurrentUser;
 
         // Singleton instance so we have a single proxy throughout the app
         private static TransactionServiceProxy? instance;
@@ -37,32 +35,31 @@ namespace CEN4090L_Project.Services
             groupService = GroupServiceProxy.Current;
             // testing data
             AddOrUpdateBudget(new Budget {TotalAmount = 1000, Expenses = new List<Expense>()});
-            user?.Budget?.Expenses.Add(new Expense { Amount = 100, Title = "hello", Category = BudgetCategory.Needs});
+            CurrentUser?.Budget?.Expenses.Add(new Expense { Amount = 100, Title = "hello", Category = BudgetCategory.Needs});
         }
 
-        // this should take in a budget object but for now just the fields
         public Budget AddOrUpdateBudget(Budget newBud)
         {
-            user.Budget = newBud;
-            return user.Budget;
+            CurrentUser.Budget = newBud;
+            return CurrentUser.Budget;
         }
 
         //add desire expense from the list of expenses
         public void addExpense(Expense e)
         {
-            user?.Budget?.Expenses.Add(e);
+            CurrentUser?.Budget?.Expenses.Add(e);
         }
 
         //remove desire expense from the list of expenses
         public bool removeExpense(int id)
         {
             bool removed = false;
-            foreach (Expense e in user?.Budget?.Expenses ?? new List<Expense>())
+            foreach (Expense e in CurrentUser?.Budget?.Expenses ?? new List<Expense>())
             {
                 //checks if the expense exiist in the list
                 if (id == e.Id)
                 {
-                    removed = user?.Budget?.Expenses.Remove(e) ?? false;
+                    removed = CurrentUser?.Budget?.Expenses.Remove(e) ?? false;
 
                 }
             }
@@ -86,5 +83,44 @@ namespace CEN4090L_Project.Services
             return categoryList;
         }
 
+        // SavingsGoal wrappers
+        // These forward calls to the SavingsGoalService using the current user context.
+
+        public SavingsGoal AddOrUpdateSavingsGoal(SavingsGoal goal)
+        {
+            var user = CurrentUser ?? throw new InvalidOperationException("No current user available.");
+            // ensure owner is set
+            goal.OwnerUserId = user.Id;
+            var saved = _savingsService.AddOrUpdate(goal);
+
+            // Optionally re-run allocations when goals change:
+            // if user.Budget?.TotalAmount is the monthly savings, call ReallocateMonthly(...)
+            if (user.Budget?.Savings.HasValue == true && user.Budget.Savings.Value > 0)
+            {
+                // If your Budget stores a monthly savings number, pass it here.
+                _savingsService.ReallocateMonthly(user.Budget.Savings.Value);
+            }
+
+            return saved;
+        }
+
+        public SavingsGoal? GetSavingsGoal(int id)
+        {
+            return _savingsService.Get(id);
+        }
+
+        public IReadOnlyList<SavingsGoal> ListAllSavingsGoals() => _savingsService.ListAll();
+
+        public IReadOnlyList<SavingsGoal> ListActiveSavingsGoals() => _savingsService.ListActive();
+
+        public bool DeleteSavingsGoal(int id)
+        {
+            return _savingsService.Delete(id);
+        }
+
+        public void ReallocateMonthlySavings(decimal monthlySavings)
+        {
+            _savingsService.ReallocateMonthly(monthlySavings);
+        }
     }
 }
