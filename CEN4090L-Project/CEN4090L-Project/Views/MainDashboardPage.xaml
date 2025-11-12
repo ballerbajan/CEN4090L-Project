@@ -6,10 +6,6 @@
     xmlns:vm="clr-namespace:CEN4090L_Project.ViewModels"
     Title="College Companion">
 
-    <!-- Bind the page to its ViewModel -->
-    <ContentPage.BindingContext>
-        <vm:DashboardViewModel />
-    </ContentPage.BindingContext>
 
     <!-- Make content scrollable -->
     <ScrollView>
@@ -111,33 +107,59 @@
 
             <!-- ========== RECENT EXPENSES SECTION ========== -->
             <Label Text="Recent Expenses" FontAttributes="Bold" FontSize="18" />
-
-            <!-- Displays the most recent expenses -->
+           
             <CollectionView ItemsSource="{Binding RecentExpenses}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Frame Padding="12" CornerRadius="12" HasShadow="False" BorderColor="#ddd">
-                            <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto">
-                                <Label Grid.Row="0" Grid.Column="0"
-                                       Text="{Binding Description}"
-                                       FontAttributes="Bold" />
-                                <Label Grid.Row="0" Grid.Column="1"
-                                       Text="{Binding Amount, StringFormat='${0:F2}'}" />
-                                <Label Grid.Row="1" Grid.Column="0"
-                                       Text="{Binding Category}" FontSize="12" TextColor="#666" />
-                                <Label Grid.Row="1" Grid.Column="1"
-                                       Text="{Binding Date, StringFormat='{0:MMM dd}'}"
-                                       FontSize="12" TextColor="#666" />
-                            </Grid>
-                        </Frame>
+                        <SwipeView>
+                            <!-- Swipe to Delete -->
+                            <SwipeView.RightItems>
+                                <SwipeItems Mode="Execute">
+                                    <SwipeItem Text="Delete"
+                                  BackgroundColor="Red"
+                                  Command="{Binding Source={RelativeSource AncestorType={x:Type vm:DashboardViewModel}}, Path=DeleteExpenseCommand}"
+                                  CommandParameter="{Binding .}"/>
+                                </SwipeItems>
+                            </SwipeView.RightItems>
+
+                            <Frame Padding="12" Margin="0,5" CornerRadius="12" HasShadow="False" BorderColor="#dddddd">
+                                <Grid ColumnDefinitions="*,Auto,Auto" RowDefinitions="Auto,Auto">
+                                    <!-- Expense Info -->
+                                    <Label Grid.Row="0" Grid.Column="0"
+                               Text="{Binding Title}"
+                               FontAttributes="Bold" />
+                                    <Label Grid.Row="0" Grid.Column="1"
+                               Text="{Binding Amount, StringFormat='{0:C}'}" />
+                                    <Label Grid.Row="1" Grid.Column="0"
+                               Text="{Binding Category}"
+                               FontSize="12" 
+                               TextColor="Gray" />
+                                    <Label Grid.Row="1" Grid.Column="1"
+                               Text="{Binding DateTime, StringFormat='{0:MMM dd}'}"
+                               FontSize="12" 
+                               TextColor="Gray" />
+
+                                    <!-- Delete X Button -->
+                                    <Button Grid.Row="0" Grid.Column="2" Grid.RowSpan="2"
+                                Text="✕"
+                                FontSize="20"
+                                TextColor="Red"
+                                BackgroundColor="Transparent"
+                                WidthRequest="40"
+                                HeightRequest="40"
+                                CornerRadius="20"
+                                VerticalOptions="Center"
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type vm:DashboardViewModel}}, Path=DeleteExpenseCommand}"
+                                CommandParameter="{Binding .}"/>
+                                </Grid>
+                            </Frame>
+                        </SwipeView>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
-
-                <!-- Message when no expenses are listed -->
                 <CollectionView.EmptyView>
                     <Label Text="No expenses recorded yet."
-                           HorizontalOptions="Center"
-                           Padding="16" />
+               HorizontalOptions="Center"
+               Padding="16" />
                 </CollectionView.EmptyView>
             </CollectionView>
 
