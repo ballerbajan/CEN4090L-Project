@@ -16,27 +16,74 @@
 
             <!-- Category Section -->
             <Label Text="Category"
-                   FontAttributes="Bold"
-                   FontSize="16" />
-
+       FontAttributes="Bold"
+       FontSize="16" />
             <HorizontalStackLayout Spacing="10">
                 <Button Text="Needs"
-                        StyleClass="CategoryButton"
-                        BackgroundColor="{Binding NeedsSelected, Converter={StaticResource BoolToColorConverter}, ConverterParameter='Needs'}"
-                        Command="{Binding SelectCategoryCommand}"
-                        CommandParameter="Needs" />
+            WidthRequest="100"
+            HeightRequest="50"
+            CornerRadius="10"
+            Command="{Binding SelectCategoryCommand}"
+            CommandParameter="Needs">
+                    <Button.Triggers>
+                        <DataTrigger TargetType="Button" 
+                        Binding="{Binding NeedsSelected}" 
+                        Value="True">
+                            <Setter Property="BackgroundColor" Value="#3B82F6" />
+                            <Setter Property="TextColor" Value="White" />
+                        </DataTrigger>
+                        <DataTrigger TargetType="Button" 
+                        Binding="{Binding NeedsSelected}" 
+                        Value="False">
+                            <Setter Property="BackgroundColor" Value="#E5E7EB" />
+                            <Setter Property="TextColor" Value="#1F2937" />
+                        </DataTrigger>
+                    </Button.Triggers>
+                </Button>
 
                 <Button Text="Wants"
-                        StyleClass="CategoryButton"
-                        BackgroundColor="{Binding WantsSelected, Converter={StaticResource BoolToColorConverter}, ConverterParameter='Wants'}"
-                        Command="{Binding SelectCategoryCommand}"
-                        CommandParameter="Wants" />
+            WidthRequest="100"
+            HeightRequest="50"
+            CornerRadius="10"
+            Command="{Binding SelectCategoryCommand}"
+            CommandParameter="Wants">
+                    <Button.Triggers>
+                        <DataTrigger TargetType="Button" 
+                        Binding="{Binding WantsSelected}" 
+                        Value="True">
+                            <Setter Property="BackgroundColor" Value="#F59E0B" />
+                            <Setter Property="TextColor" Value="White" />
+                        </DataTrigger>
+                        <DataTrigger TargetType="Button" 
+                        Binding="{Binding WantsSelected}" 
+                        Value="False">
+                            <Setter Property="BackgroundColor" Value="#E5E7EB" />
+                            <Setter Property="TextColor" Value="#1F2937" />
+                        </DataTrigger>
+                    </Button.Triggers>
+                </Button>
 
                 <Button Text="Savings"
-                        StyleClass="CategoryButton"
-                        BackgroundColor="{Binding SavingsSelected, Converter={StaticResource BoolToColorConverter}, ConverterParameter='Savings'}"
-                        Command="{Binding SelectCategoryCommand}"
-                        CommandParameter="Savings" />
+            WidthRequest="100"
+            HeightRequest="50"
+            CornerRadius="10"
+            Command="{Binding SelectCategoryCommand}"
+            CommandParameter="Savings">
+                    <Button.Triggers>
+                        <DataTrigger TargetType="Button" 
+                        Binding="{Binding SavingsSelected}" 
+                        Value="True">
+                            <Setter Property="BackgroundColor" Value="#10B981" />
+                            <Setter Property="TextColor" Value="White" />
+                        </DataTrigger>
+                        <DataTrigger TargetType="Button" 
+                        Binding="{Binding SavingsSelected}" 
+                        Value="False">
+                            <Setter Property="BackgroundColor" Value="#E5E7EB" />
+                            <Setter Property="TextColor" Value="#1F2937" />
+                        </DataTrigger>
+                    </Button.Triggers>
+                </Button>
             </HorizontalStackLayout>
 
             <!-- Description -->
