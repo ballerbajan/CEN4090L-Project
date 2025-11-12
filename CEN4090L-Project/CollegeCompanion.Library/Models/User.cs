@@ -21,6 +21,7 @@ namespace CEN4090L_Project.Models
 
         public float? Income { get; set; } // tracked monthly income just a float
 
+        public List<SavingsGoal> SavingsGoals { get; set; } = new List<SavingsGoal>();
 
         public override string ToString()
         {
