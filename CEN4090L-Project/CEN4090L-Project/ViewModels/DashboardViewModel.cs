@@ -8,9 +8,20 @@ namespace CEN4090L_Project.ViewModels
 {
     public class DashboardViewModel : INotifyPropertyChanged
     {
+        private static DashboardViewModel _instance;
+        public static DashboardViewModel Instance
+        {
+            get
+            {
+                if (_instance == null)
+                    _instance = new DashboardViewModel();
+                return _instance;
+            }
+        }
+
         // ----- backing fields -----
-        private decimal _income = 0m;           // no default value - user must enter
-        private decimal _plannedSavings = 0m;   // no default value - user must enter
+        private decimal _income = 0m;
+        private decimal _plannedSavings = 0m;
         private ObservableCollection<Expense> _recent = new();
 
         // 50/30/20 allocations
@@ -62,29 +73,60 @@ namespace CEN4090L_Project.ViewModels
         // ----- commands -----
         public Command EditBudgetCommand { get; }
         public Command AddExpenseCommand { get; }
+        public Command<Expense> DeleteExpenseCommand { get; }  // ← This is fine here
 
-        public DashboardViewModel()
+        private DashboardViewModel()  // ← Made private for singleton
         {
-            // Initialize with empty collection - user will add their own expenses
+            // Initialize with empty collection
             RecentExpenses = new ObservableCollection<Expense>();
 
             EditBudgetCommand = new Command(OnEditBudget);
             AddExpenseCommand = new Command(OnAddExpense);
+            DeleteExpenseCommand = new Command<Expense>(OnDeleteExpense);  // ← ADD THIS LINE
         }
 
         private void OnEditBudget()
         {
-            // TODO: navigate to Budget Setup/Edit Page (Issue #21)
             Application.Current?.MainPage?.DisplayAlert("Edit Budget", "Navigate to Budget Setup/Edit Page.", "OK");
         }
 
         private async void OnAddExpense()
         {
-            // TODO: navigate to Add Expense Form (Issue #19)
             await Application.Current.MainPage.Navigation.PushAsync(new AddExpensePage());
-            //Application.Current?.MainPage?.DisplayAlert("Add Expense", "Navigate to Add Expense Form.", "OK");
+        }
 
+        private async void OnDeleteExpense(Expense expense)
+        {
+            if (expense == null) return;
 
+            bool confirm = await Application.Current.MainPage.DisplayAlert(
+                "Delete Expense",
+                $"Are you sure you want to delete '{expense.Title}' ({expense.Amount:C})?",
+                "Delete",
+                "Cancel"
+            );
+
+            if (!confirm) return;
+
+            try
+            {
+                RecentExpenses.Remove(expense);
+                OnPropertyChanged(nameof(RecentExpenses));
+
+                await Application.Current.MainPage.DisplayAlert(
+                    "Success",
+                    "Expense deleted successfully",
+                    "OK"
+                );
+            }
+            catch (Exception ex)
+            {
+                await Application.Current.MainPage.DisplayAlert(
+                    "Error",
+                    $"Failed to delete expense: {ex.Message}",
+                    "OK"
+                );
+            }
         }
 
         // recompute when income/expenses change
@@ -116,6 +158,7 @@ namespace CEN4090L_Project.ViewModels
 
         // --- INotifyPropertyChanged boilerplate ---
         public event PropertyChangedEventHandler? PropertyChanged;
+
         protected bool Set<T>(ref T field, T value, [CallerMemberName] string? name = null)
         {
             if (EqualityComparer<T>.Default.Equals(field, value)) return false;
@@ -123,25 +166,8 @@ namespace CEN4090L_Project.ViewModels
             OnPropertyChanged(name);
             return true;
         }
-        protected void OnPropertyChanged([CallerMemberName] string? name = null)
+
+        public void OnPropertyChanged([CallerMemberName] string? name = null)
             => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
-
-        private async Task AddExpense()
-        {
-            try
-            {
-                await Shell.Current.GoToAsync(nameof(AddExpensePage));
-            }
-            catch (Exception ex)
-            {
-                await Application.Current.MainPage.DisplayAlert(
-                    "Navigation Error",
-                    $"Could not navigate to Add Expense page: {ex.Message}",
-                    "OK"
-                );
-            }
-        }
-
-
     }
 }
