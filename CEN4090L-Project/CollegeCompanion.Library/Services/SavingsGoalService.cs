@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using CEN4090L_Project.Models;
+using CEN4090L_Project.Services;
 
 namespace CEN4090L_Project.Services
 {
@@ -10,7 +11,15 @@ namespace CEN4090L_Project.Services
     /// </summary>
     public class SavingsGoalService
     {
-        private readonly List<SavingsGoal> _goals = new();
+        // reference to transaction service proxy to get current user
+        private TransactionServiceProxy _transactionService;
+        // get the updated list of goals from the current user
+        public List<SavingsGoal> Goals => _transactionService.CurrentUser?.SavingsGoals ?? new List<SavingsGoal>();
+        public SavingsGoalService()
+        {
+            // init
+            _transactionService = TransactionServiceProxy.Current;
+        }
 
         // ---------- CRUD ----------
         public SavingsGoal AddOrUpdate(SavingsGoal goal)
@@ -27,28 +36,28 @@ namespace CEN4090L_Project.Services
 
             if (goal.Id == 0)
             {
-                goal.Id = _goals.Count == 0 ? 1 : _goals.Max(g => g.Id) + 1;
-                _goals.Add(goal);
+                goal.Id = Goals.Count == 0 ? 1 : Goals.Max(g => g.Id) + 1;
+                Goals.Add(goal);
             }
             else
             {
-                var i = _goals.FindIndex(g => g.Id == goal.Id);
-                if (i >= 0) _goals[i] = goal;
-                else _goals.Add(goal);
+                var i = Goals.FindIndex(g => g.Id == goal.Id);
+                if (i >= 0) Goals[i] = goal;
+                else Goals.Add(goal);
             }
             return goal;
         }
 
-        public SavingsGoal? Get(int id) => _goals.FirstOrDefault(g => g.Id == id);
+        public SavingsGoal? Get(int id) => Goals.FirstOrDefault(g => g.Id == id);
 
-        public IReadOnlyList<SavingsGoal> ListAll() => _goals.AsReadOnly();
+        public IReadOnlyList<SavingsGoal> ListAll() => Goals.AsReadOnly();
 
         public IReadOnlyList<SavingsGoal> ListActive() =>
-            _goals.Where(g => g.IsActive && !g.IsAchieved).ToList();
+            Goals.Where(g => g.IsActive && !g.IsAchieved).ToList();
 
         public bool Delete(int id)
         {
-            var g = _goals.FirstOrDefault(x => x.Id == id);
+            var g = Goals.FirstOrDefault(x => x.Id == id);
             if (g is null) return false;
             g.IsActive = false;            // soft delete to preserve history
             g.MonthlyAllocation = 0m;
@@ -65,7 +74,7 @@ namespace CEN4090L_Project.Services
         {
             if (monthlySavings < 0) monthlySavings = 0;
 
-            var goals = _goals
+            var goals = Goals
                 .Where(g => g.IsActive && !g.IsAchieved)
                 .OrderByDescending(g => g.Priority) // higher priority earlier for leftovers
                 .ToList();
