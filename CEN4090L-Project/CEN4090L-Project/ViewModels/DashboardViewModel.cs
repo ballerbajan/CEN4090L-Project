@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using CEN4090L_Project.Views;
 using CEN4090L_Project.Models;
+using Microsoft.Maui.Controls;
 
 namespace CEN4090L_Project.ViewModels
 {
@@ -85,9 +86,20 @@ namespace CEN4090L_Project.ViewModels
             DeleteExpenseCommand = new Command<Expense>(OnDeleteExpense);  // ← ADD THIS LINE
         }
 
-        private void OnEditBudget()
+        private async void OnEditBudget()
         {
-            Application.Current?.MainPage?.DisplayAlert("Edit Budget", "Navigate to Budget Setup/Edit Page.", "OK");
+            string result = await Application.Current.MainPage.DisplayPromptAsync(
+                "Add Income",
+                "Enter amount:",
+                accept: "Save",
+                cancel: "Cancel",
+                placeholder: Income.ToString("F2"),
+                keyboard: Keyboard.Numeric,
+                maxLength: 10
+            );
+
+            if (!string.IsNullOrEmpty(result) && decimal.TryParse(result, out decimal amount))
+                Income = amount;
         }
 
         private async void OnAddExpense()
