@@ -71,43 +71,67 @@
 
                 <!-- NEEDS (50%) CARD -->
                 <Frame Grid.Row="0" Padding="12" CornerRadius="14" HasShadow="True">
-                    <VerticalStackLayout Spacing="6">
-                        <Grid ColumnDefinitions="Auto,*">
-                            <Label Text="Needs (50%)" FontAttributes="Bold" />
-                            <Label Grid.Column="1" HorizontalTextAlignment="End"
-                                   Text="{Binding NeedsRemainingText}" />
-                        </Grid>
-                        <ProgressBar Progress="{Binding NeedsProgress}" HeightRequest="8" />
-                        <Label FontSize="12" Text="{Binding NeedsSpentText}" />
-                    </VerticalStackLayout>
+                    <Grid ColumnDefinitions="Auto, *" ColumnSpacing="12" VerticalOptions="Center">
+                        <Image Source="needs.png"
+                               WidthRequest="80"
+                               HeightRequest="80"
+                               Aspect="AspectFit"
+                               VerticalOptions="Center"/>
+                        <VerticalStackLayout Grid.Column="1" Spacing="6" VerticalOptions="Center">
+                            <Grid ColumnDefinitions="Auto, *">
+                                <Label Text="Needs (50%)" FontAttributes="Bold"/>
+                                <Label Grid.Column="1" HorizontalTextAlignment="End"
+                                       Text="{Binding NeedsRemainingText}"/>
+                            </Grid>
+                            <ProgressBar Progress="{Binding NeedsProgress}" HeightRequest="8" />
+                            <Label FontSize="12" Text="{Binding NeedsSpentText}" />
+                        </VerticalStackLayout>
+                    </Grid>
                 </Frame>
 
                 <!-- WANTS (30%) CARD -->
                 <Frame Grid.Row="1" Padding="12" CornerRadius="14" HasShadow="True">
-                    <VerticalStackLayout Spacing="6">
-                        <Grid ColumnDefinitions="Auto,*">
-                            <Label Text="Wants (30%)" FontAttributes="Bold" />
-                            <Label Grid.Column="1" HorizontalTextAlignment="End"
-                                   Text="{Binding WantsRemainingText}" />
-                        </Grid>
-                        <ProgressBar Progress="{Binding WantsProgress}" HeightRequest="8" />
-                        <Label FontSize="12" Text="{Binding WantsSpentText}" />
-                    </VerticalStackLayout>
+                    <Grid ColumnDefinitions="Auto, *" ColumnSpacing="12" VerticalOptions="Center">
+                        <Image Source="spending.png"
+                               VerticalOptions="Center"
+                               HeightRequest="80"
+                               WidthRequest="80"
+                               Aspect="AspectFit"/>
+                        <VerticalStackLayout Grid.Column="1" Spacing="6" VerticalOptions="Center">
+                            <Grid ColumnDefinitions="Auto, *">
+                                <Label Text="Wants (30%)" FontAttributes="Bold"/>
+                                <Label Grid.Column="1" HorizontalTextAlignment="End"
+                                       Text="{Binding WantsRemainingText}"/>
+                            </Grid>
+                            <ProgressBar Progress="{Binding WantsProgress}" HeightRequest="8" />
+                            <Label FontSize="12" Text="{Binding WantsSpentText}" />
+                        </VerticalStackLayout>
+                    </Grid>
+                   
                 </Frame>
 
                 <!-- SAVINGS (20%) CARD -->
                 <Frame Grid.Row="2" Padding="12" CornerRadius="14" HasShadow="True">
-                    <VerticalStackLayout Spacing="6">
-                        <Grid ColumnDefinitions="Auto,*">
-                            <Label Text="Savings (20%)" FontAttributes="Bold" />
-                            <Label Grid.Column="1" HorizontalTextAlignment="End"
-                                   Text="{Binding SavingsRemainingText}" />
-                        </Grid>
-                        <ProgressBar Progress="{Binding SavingsProgress}" HeightRequest="8" />
-                        <Label FontSize="12" Text="{Binding SavingsSpentText}" />
-                    </VerticalStackLayout>
+                    <Grid ColumnDefinitions="Auto, *" ColumnSpacing="12" VerticalOptions="Center">
+                        <Image Source="piggy2.png"
+                               HeightRequest="80"
+                               WidthRequest="80"
+                               Aspect="AspectFit"
+                               VerticalOptions="Center"/>
+                        <VerticalStackLayout Grid.Column="1" Spacing="6" VerticalOptions="Center">
+                            <Grid ColumnDefinitions="Auto, *">
+                                <Label Text="Savings (20%)" FontAttributes="Bold"/>
+                                <Label Grid.Column="1" HorizontalTextAlignment="End"
+                                       Text="{Binding SavingsRemainingText}"/>
+                            </Grid>
+                            <ProgressBar Progress="{Binding SavingsProgress}" HeightRequest="8" />
+                            <Label FontSize="12" Text="{Binding SavingsSpentText}" />
+                        </VerticalStackLayout>
+                    </Grid>
                 </Frame>
             </Grid>
+
+
 
             <!-- ========== RECENT EXPENSES SECTION ========== -->
             <Label Text="Recent Expenses" FontAttributes="Bold" FontSize="18" />

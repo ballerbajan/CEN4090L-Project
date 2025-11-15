@@ -83,12 +83,14 @@ namespace CEN4090L_Project.ViewModels
         {
             // TODO: navigate to Budget Setup/Edit Page (Issue #21)
             Application.Current?.MainPage?.DisplayAlert("Edit Budget", "Navigate to Budget Setup/Edit Page.", "OK");
+            RefreshPage();
         }
 
         private void OnAddExpense()
         {
             // TODO: navigate to Add Expense Form (Issue #19)
             Application.Current?.MainPage?.DisplayAlert("Add Expense", "Navigate to Add Expense Form.", "OK");
+            RefreshPage();
         }
 
         // recompute when income/expenses change
@@ -116,6 +118,11 @@ namespace CEN4090L_Project.ViewModels
             OnPropertyChanged(nameof(SavingsRemainingText));
 
             OnPropertyChanged(nameof(RemainingThisMonthText));
+        }
+
+        public void RefreshPage()
+        {
+            OnPropertyChanged(nameof(RecentExpenses));
         }
 
         // --- INotifyPropertyChanged boilerplate ---
