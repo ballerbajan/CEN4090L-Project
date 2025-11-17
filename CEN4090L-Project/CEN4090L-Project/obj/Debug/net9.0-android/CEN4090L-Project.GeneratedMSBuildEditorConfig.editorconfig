@@ -55,6 +55,12 @@ build_metadata.AdditionalFiles.ManifestResourceName = CEN4090L_Project.Views.Add
 build_metadata.AdditionalFiles.TargetPath = Views\AddExpensePage.xaml
 build_metadata.AdditionalFiles.RelativePath = Views\AddExpensePage.xaml
 
+[C:/HardDocuments/Classes/CEN4020+CEN4090L/Project Stuff/CEN4090L-Project/CEN4090L-Project/CEN4090L-Project/Views/loginPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = CEN4090L_Project.Views.loginPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\loginPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\loginPage.xaml
+
 [C:/HardDocuments/Classes/CEN4020+CEN4090L/Project Stuff/CEN4090L-Project/CEN4090L-Project/CEN4090L-Project/Views/MainDashboardPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = CEN4090L_Project.Views.MainDashboardPage.xaml

@@ -88,6 +88,7 @@ namespace CEN4090L_Project.ViewModels
 
         private async void OnEditBudget()
         {
+
             string result = await Application.Current.MainPage.DisplayPromptAsync(
                 "Add Income",
                 "Enter amount:",
@@ -100,6 +101,7 @@ namespace CEN4090L_Project.ViewModels
 
             if (!string.IsNullOrEmpty(result) && decimal.TryParse(result, out decimal amount))
                 Income = amount;
+
         }
 
         private async void OnAddExpense()
@@ -139,6 +141,7 @@ namespace CEN4090L_Project.ViewModels
                     "OK"
                 );
             }
+
         }
 
         // recompute when income/expenses change
@@ -166,6 +169,11 @@ namespace CEN4090L_Project.ViewModels
             OnPropertyChanged(nameof(SavingsRemainingText));
 
             OnPropertyChanged(nameof(RemainingThisMonthText));
+        }
+
+        public void RefreshPage()
+        {
+            OnPropertyChanged(nameof(RecentExpenses));
         }
 
         // --- INotifyPropertyChanged boilerplate ---
