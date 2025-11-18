@@ -92,7 +92,7 @@
                         <ProgressBar Progress="{Binding NeedsProgress}" 
                         HeightRequest="30"
                         VerticalOptions="Center"
-                        ScaleY="7"
+                        ScaleY="2"
                         ProgressColor="#3B82F6" />
                         <Label FontSize="12" Text="{Binding NeedsSpentText}" />
                     </VerticalStackLayout>
@@ -116,7 +116,7 @@
                         <ProgressBar Progress="{Binding WantsProgress}" 
                         HeightRequest="30"
                         VerticalOptions="Center"
-                        ScaleY="7"
+                        ScaleY="2"
                         ProgressColor="#F59E0B" />
                         <Label FontSize="12" Text="{Binding WantsSpentText}" />
                     </VerticalStackLayout>
@@ -140,7 +140,7 @@
                         <ProgressBar Progress="{Binding SavingsProgress}" 
                         HeightRequest="30"
                         VerticalOptions="Center"
-                        ScaleY="7"
+                        ScaleY="2"
                         ProgressColor="#10B981" />
                         <Label FontSize="12" Text="{Binding SavingsSpentText}" />
                     </VerticalStackLayout>
