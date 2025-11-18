@@ -4,6 +4,7 @@ using System.Runtime.CompilerServices;
 using CEN4090L_Project.Views;
 using CEN4090L_Project.Models;
 using Microsoft.Maui.Controls;
+using System.Collections.Specialized;
 
 namespace CEN4090L_Project.ViewModels
 {
@@ -41,14 +42,37 @@ namespace CEN4090L_Project.ViewModels
         public ObservableCollection<Expense> RecentExpenses
         {
             get => _recent;
-            set { Set(ref _recent, value); Recompute(); }
+            set
+            {
+                // Unsubscribe from old collection
+                if (_recent != null)
+                {
+                    _recent.CollectionChanged -= RecentExpenses_CollectionChanged;
+                }
+
+                if (Set(ref _recent, value))
+                {
+                    // Subscribe to new collection
+                    if (_recent != null)
+                    {
+                        _recent.CollectionChanged += RecentExpenses_CollectionChanged;
+                    }
+                    Recompute();
+                }
+            }
+        }
+
+        // Handle collection changes (add/remove items)
+        private void RecentExpenses_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            Recompute();
         }
 
         // computed totals
-        public decimal? TotalNeeds => RecentExpenses.Where(e => e.Category == BudgetCategory.Needs).Sum(e => e.Amount);
-        public decimal? TotalWants => RecentExpenses.Where(e => e.Category == BudgetCategory.Wants).Sum(e => e.Amount);
-        public decimal? TotalSavingsSpent => RecentExpenses.Where(e => e.Category == BudgetCategory.Savings).Sum(e => e.Amount);
-        public decimal? TotalExpenses => TotalNeeds + TotalWants + TotalSavingsSpent;
+        public decimal TotalNeeds => RecentExpenses?.Where(e => e.Category == BudgetCategory.Needs).Sum(e => e.Amount ?? 0m) ?? 0m;
+        public decimal TotalWants => RecentExpenses?.Where(e => e.Category == BudgetCategory.Wants).Sum(e => e.Amount ?? 0m) ?? 0m;
+        public decimal TotalSavingsSpent => RecentExpenses?.Where(e => e.Category == BudgetCategory.Savings).Sum(e => e.Amount ?? 0m) ?? 0m;
+        public decimal TotalExpenses => TotalNeeds + TotalWants + TotalSavingsSpent;
 
         // allocation targets
         public decimal NeedsBudget => Math.Round(Income * 0.50m, 2);
@@ -56,9 +80,9 @@ namespace CEN4090L_Project.ViewModels
         public decimal SavingsBudget => Math.Round(Income * 0.20m, 2);
 
         // progress 0..1
-        public double NeedsProgress => (double)Math.Clamp((NeedsBudget == 0 ? 0m : TotalNeeds / NeedsBudget ?? 0m), 0, 1);
-        public double WantsProgress => (double)Math.Clamp((WantsBudget == 0 ? 0m : TotalWants / WantsBudget ?? 0m), 0, 1);
-        public double SavingsProgress => (double)Math.Clamp((SavingsBudget == 0 ? 0m : TotalSavingsSpent / SavingsBudget ?? 0m), 0, 1);
+        public double NeedsProgress => (double)Math.Clamp((NeedsBudget == 0 ? 0m : TotalNeeds / NeedsBudget), 0, 1);
+        public double WantsProgress => (double)Math.Clamp((WantsBudget == 0 ? 0m : TotalWants / WantsBudget), 0, 1);
+        public double SavingsProgress => (double)Math.Clamp((SavingsBudget == 0 ? 0m : TotalSavingsSpent / SavingsBudget), 0, 1);
 
         // display strings
         public string NeedsSpentText => $"Spent {TotalNeeds:C} / {NeedsBudget:C}";
@@ -74,21 +98,23 @@ namespace CEN4090L_Project.ViewModels
         // ----- commands -----
         public Command EditBudgetCommand { get; }
         public Command AddExpenseCommand { get; }
-        public Command<Expense> DeleteExpenseCommand { get; }  // ← This is fine here
+        public Command<Expense> DeleteExpenseCommand { get; }
 
-        private DashboardViewModel()  // ← Made private for singleton
+        private DashboardViewModel()
         {
             // Initialize with empty collection
             RecentExpenses = new ObservableCollection<Expense>();
 
+            // Subscribe to collection changes
+            RecentExpenses.CollectionChanged += RecentExpenses_CollectionChanged;
+
             EditBudgetCommand = new Command(OnEditBudget);
             AddExpenseCommand = new Command(OnAddExpense);
-            DeleteExpenseCommand = new Command<Expense>(OnDeleteExpense);  // ← ADD THIS LINE
+            DeleteExpenseCommand = new Command<Expense>(OnDeleteExpense);
         }
 
         private async void OnEditBudget()
         {
-
             string result = await Application.Current.MainPage.DisplayPromptAsync(
                 "Add Income",
                 "Enter amount:",
@@ -101,7 +127,6 @@ namespace CEN4090L_Project.ViewModels
 
             if (!string.IsNullOrEmpty(result) && decimal.TryParse(result, out decimal amount))
                 Income = amount;
-
         }
 
         private async void OnAddExpense()
@@ -125,7 +150,7 @@ namespace CEN4090L_Project.ViewModels
             try
             {
                 RecentExpenses.Remove(expense);
-                OnPropertyChanged(nameof(RecentExpenses));
+                // CollectionChanged event will automatically call Recompute()
 
                 await Application.Current.MainPage.DisplayAlert(
                     "Success",
@@ -141,7 +166,6 @@ namespace CEN4090L_Project.ViewModels
                     "OK"
                 );
             }
-
         }
 
         // recompute when income/expenses change
@@ -173,7 +197,7 @@ namespace CEN4090L_Project.ViewModels
 
         public void RefreshPage()
         {
-            OnPropertyChanged(nameof(RecentExpenses));
+            Recompute();
         }
 
         // --- INotifyPropertyChanged boilerplate ---
