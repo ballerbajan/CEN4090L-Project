@@ -9,6 +9,11 @@
     Title="CEN4090L_Project">
 
     <ShellContent
+    Title="LoginPage"
+    Route="LoginPage"
+    ContentTemplate="{DataTemplate views:LoginPage}" />
+    
+    <ShellContent
         Title="Dashboard"
         Icon="{StaticResource IconDashboard}"
         ContentTemplate="{DataTemplate views:MainDashboardPage}"
@@ -18,7 +23,14 @@
         Title="AddExpensePage"
         Route="AddExpensePage"
         ContentTemplate="{DataTemplate views:AddExpensePage}" />
-  
+
+
+
+    <ShellContent
+        Title="RegisterPage"
+        Route="RegisterPage"
+        ContentTemplate="{DataTemplate views:RegisterPage}" />
+
     <Shell.FlyoutFooter>
         <Grid Padding="15">
             <sf:SfSegmentedControl x:Name="ThemeSegmentedControl" 

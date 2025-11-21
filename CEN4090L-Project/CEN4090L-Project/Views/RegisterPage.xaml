@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="CEN4090L_Project.Views.RegisterPage"
+    Title="Create Account">
+
+    <ScrollView>
+        <VerticalStackLayout
+            Padding="30"
+            Spacing="20"
+            VerticalOptions="Center">
+
+            <Label Text="Create Account"
+                   FontSize="26"
+                   HorizontalOptions="Center" />
+            <!-- Name -->
+            <Entry
+                Placeholder="Name"
+                Text="{Binding Name}"
+                Keyboard="Default"
+                />
+            
+            <!-- Email -->
+            <Entry
+                Placeholder="Email"
+                Text="{Binding Email}"
+                Keyboard="Default"
+                />
+            
+            <!-- Username -->
+            <Entry
+                Placeholder="Username"
+                Text="{Binding Username}"
+                Keyboard="Default"
+                />
+            
+            <!-- Password -->
+            <Entry
+                Placeholder="Password"
+                Text="{Binding Password}"
+                IsPassword="True"
+                />
+
+            <!-- Confirm Password -->
+            <Entry
+                Placeholder="Confirm Password"
+                Text="{Binding ConfirmPassword}"
+                IsPassword="True"
+                />
+
+            <!-- Error message -->
+            <Label
+                Text="{Binding ErrorMessage}"
+                TextColor="Red"
+                FontAttributes="Bold"
+                IsVisible="{Binding HasError}"
+                />
+
+            <!-- Register button -->
+            <Button
+                Text="Create Account"
+                Command="{Binding RegisterCommand}"
+                />
+
+            <!-- Link to login -->
+            <Button
+                Text="Back to Login"
+                Command="{Binding GoToLoginCommand}"
+                BackgroundColor="Transparent"
+                TextColor="Blue" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

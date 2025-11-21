@@ -1,17 +1,21 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using CEN4090L_Project.Views;
+using CEN4090L_Project.Models;
 
 namespace CEN4090L_Project.ViewModels
 {
     public class LoginViewModel : INotifyPropertyChanged
     {
-        private string _email = string.Empty;
+        private GroupServiceProxy _service => GroupServiceProxy.Current;
+
+        private string _username = string.Empty;
         private string _password = string.Empty;
 
-        public string Email
+        public string Username
         {
-            get => _email;
-            set { _email = value; OnPropertyChanged(); }
+            get => _username;
+            set { _username = value; OnPropertyChanged(); }
         }
 
         public string Password
@@ -34,21 +38,33 @@ namespace CEN4090L_Project.ViewModels
 
         private async void OnLogin()
         {
-            // TODO: Add authentication logic here
-            if (string.IsNullOrWhiteSpace(Email) || string.IsNullOrWhiteSpace(Password))
+            if (string.IsNullOrWhiteSpace(Username) || string.IsNullOrWhiteSpace(Password))
             {
-                await Application.Current.MainPage.DisplayAlert("Error", "Please enter both email and password.", "OK");
+                await Application.Current.MainPage.DisplayAlert("Error", "Please enter both username and password.", "OK");
+                Password = string.Empty;
                 return;
             }
 
-            // For now, show success message and navigate to dashboard
-            await Application.Current.MainPage.DisplayAlert("Success", "Login successful!", "OK");
-            await Application.Current.MainPage.Navigation.PushAsync(new Views.MainDashboardPage());
+            // do login
+            if (_service.Login(_username, _password))
+            {
+                // For now, show success message and navigate to dashboard
+                await Application.Current.MainPage.DisplayAlert("Success", "Login successful!", "OK");
+                Password = string.Empty;
+                await Application.Current.MainPage.Navigation.PushAsync(new Views.MainDashboardPage());
+            }
+            else
+            {
+                await Application.Current.MainPage.DisplayAlert("Error", "Invalid username or password.", "OK");
+                Password = string.Empty;
+            }
+
         }
 
         private async void OnRegister()
         {
-            await Application.Current.MainPage.DisplayAlert("Info", "Navigate to Register Page (to be implemented).", "OK");
+            await Application.Current.MainPage.Navigation.PushAsync(new Views.RegisterPage());
+            //await Application.Current.MainPage.DisplayAlert("Info", "Navigate to Register Page (to be implemented).", "OK");
         }
 
         private async void OnForgotPassword()
