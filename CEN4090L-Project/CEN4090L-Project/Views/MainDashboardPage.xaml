@@ -31,6 +31,13 @@
                        HorizontalOptions="Center"
                        HorizontalTextAlignment="Center"
                        TextColor="#A78BFA"/>
+                <!-- Slogan in Italic/Cursive -->
+                <Label Text="Because your GPA isn't the only thing worth tracking"
+                   FontSize="16"
+                   FontAttributes="Italic"
+                   HorizontalOptions="Center"
+                   TextColor="#666"
+                   Margin="0,-5,0,0"/>
             </VerticalStackLayout>
 
             <!-- ========== TOP SUMMARY CARDS ========== -->
@@ -63,9 +70,9 @@
                 <!-- SAVINGS CARD -->
                 <Frame Grid.Column="2" Padding="12" CornerRadius="16" HasShadow="True">
                     <VerticalStackLayout Spacing="4">
-                        <Label Text="Savings Planned" FontSize="12" TextColor="#666" />
-                        <Label Text="{Binding PlannedSavings, StringFormat='${0:F2}'}"
-                               FontSize="20" FontAttributes="Bold" />
+                        <Label Text="Expense" FontSize="12" TextColor="#666" />
+
+                              
                         <!-- Navigates to Add Expense Form -->
                         <Button Text="Add Expense"
                                 Command="{Binding AddExpenseCommand}"
@@ -146,7 +153,103 @@
                     </VerticalStackLayout>
                 </Grid>
             </Frame>
+            <!-- ========== QUICK STATS CARDS ========== -->
+            <Label Text="Quick Insights" 
+       FontAttributes="Bold" 
+       FontSize="16" 
+       Margin="0,8,0,8"/>
 
+            <Grid ColumnDefinitions="*,*,*,*" ColumnSpacing="8">
+                <!-- Days Remaining Card -->
+                <Frame Grid.Column="0" 
+           Padding="10" 
+           CornerRadius="12" 
+           HasShadow="True"
+           BackgroundColor="#1F2937">
+                    <VerticalStackLayout Spacing="4" HorizontalOptions="Center">
+                        <Label Text="📅" 
+                   FontSize="24" 
+                   HorizontalOptions="Center"/>
+                        <Label Text="{Binding DaysRemainingInMonth}" 
+                   FontSize="22" 
+                   FontAttributes="Bold"
+                   TextColor="White"
+                   HorizontalOptions="Center"/>
+                        <Label Text="Days Left" 
+                   FontSize="10" 
+                   TextColor="#9CA3AF"
+                   HorizontalOptions="Center"/>
+                    </VerticalStackLayout>
+                </Frame>
+
+                <!-- Daily Average Card -->
+                <Frame Grid.Column="1" 
+           Padding="10" 
+           CornerRadius="12" 
+           HasShadow="True"
+           BackgroundColor="#1F2937">
+                    <VerticalStackLayout Spacing="4" HorizontalOptions="Center">
+                        <Label Text="💵" 
+                   FontSize="24" 
+                   HorizontalOptions="Center"/>
+                        <Label Text="{Binding DailyAverageSpending, StringFormat='${0:F0}'}" 
+                   FontSize="22" 
+                   FontAttributes="Bold"
+                   TextColor="White"
+                   HorizontalOptions="Center"/>
+                        <Label Text="Daily Avg" 
+                   FontSize="10" 
+                   TextColor="#9CA3AF"
+                   HorizontalOptions="Center"/>
+                    </VerticalStackLayout>
+                </Frame>
+
+                <!-- Top Category Card -->
+                <Frame Grid.Column="2" 
+           Padding="10" 
+           CornerRadius="12" 
+           HasShadow="True"
+           BackgroundColor="#1F2937">
+                    <VerticalStackLayout Spacing="4" HorizontalOptions="Center">
+                        <Label Text="🏆" 
+                   FontSize="24" 
+                   HorizontalOptions="Center"/>
+                        <Label Text="{Binding TopSpendingCategory}" 
+                   FontSize="16" 
+                   FontAttributes="Bold"
+                   TextColor="White"
+                   HorizontalOptions="Center"/>
+                        <Label Text="Top Spend" 
+                   FontSize="10" 
+                   TextColor="#9CA3AF"
+                   HorizontalOptions="Center"/>
+                    </VerticalStackLayout>
+                </Frame>
+
+                <!-- Budget Status Card -->
+                <Frame Grid.Column="3" 
+           Padding="10" 
+           CornerRadius="12" 
+           HasShadow="True"
+           BackgroundColor="{Binding BudgetStatusColor}">
+                    <VerticalStackLayout Spacing="4" HorizontalOptions="Center">
+                        <Label Text="📊" 
+                   FontSize="24" 
+                   HorizontalOptions="Center"/>
+                        <Label Text="{Binding BudgetStatus}" 
+                   FontSize="14" 
+                   FontAttributes="Bold"
+                   TextColor="White"
+                   HorizontalOptions="Center"
+                   LineBreakMode="WordWrap"
+                   MaxLines="2"/>
+                        <Label Text="Status" 
+                   FontSize="10" 
+                   TextColor="White"
+                   HorizontalOptions="Center"/>
+                    </VerticalStackLayout>
+                </Frame>
+            </Grid>
 
 
             <!-- ========== RECENT EXPENSES SECTION ========== -->
