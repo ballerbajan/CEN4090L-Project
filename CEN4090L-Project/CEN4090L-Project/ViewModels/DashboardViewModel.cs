@@ -167,6 +167,76 @@ namespace CEN4090L_Project.ViewModels
                 );
             }
         }
+        // Quick Stats Properties
+        public int DaysRemainingInMonth
+        {
+            get
+            {
+                var today = DateTime.Today;
+                var lastDay = new DateTime(today.Year, today.Month, DateTime.DaysInMonth(today.Year, today.Month));
+                return (lastDay - today).Days + 1; // +1 to include today
+            }
+        }
+
+        public decimal DailyAverageSpending
+        {
+            get
+            {
+                var today = DateTime.Today;
+                var firstDay = new DateTime(today.Year, today.Month, 1);
+                int daysElapsed = (today - firstDay).Days + 1; // +1 to include today
+
+                if (daysElapsed == 0) return 0m;
+                return TotalExpenses / daysElapsed;
+            }
+        }
+
+        public string TopSpendingCategory
+        {
+            get
+            {
+                if (TotalExpenses == 0) return "None";
+
+                var maxCategory = new[]
+                {
+            new { Name = "Needs", Amount = TotalNeeds },
+            new { Name = "Wants", Amount = TotalWants },
+            new { Name = "Savings", Amount = TotalSavingsSpent }
+        }
+                .OrderByDescending(c => c.Amount)
+                .FirstOrDefault();
+
+                return maxCategory?.Name ?? "None";
+            }
+        }
+
+        public string BudgetStatus
+        {
+            get
+            {
+                if (Income == 0) return "Not Set";
+
+                decimal spendingRate = TotalExpenses / Income;
+
+                if (spendingRate <= 0.75m) return "On Track ✓";
+                if (spendingRate <= 0.95m) return "Watch ⚠️";
+                return "Over Budget ⚠️";
+            }
+        }
+
+        public Color BudgetStatusColor
+        {
+            get
+            {
+                if (Income == 0) return Color.FromArgb("#6B7280"); // Gray
+
+                decimal spendingRate = TotalExpenses / Income;
+
+                if (spendingRate <= 0.75m) return Color.FromArgb("#10B981"); // Green
+                if (spendingRate <= 0.95m) return Color.FromArgb("#F59E0B"); // Orange
+                return Color.FromArgb("#EF4444"); // Red
+            }
+        }
 
         // recompute when income/expenses change
         private void Recompute()
@@ -193,6 +263,12 @@ namespace CEN4090L_Project.ViewModels
             OnPropertyChanged(nameof(SavingsRemainingText));
 
             OnPropertyChanged(nameof(RemainingThisMonthText));
+
+            OnPropertyChanged(nameof(DaysRemainingInMonth));
+            OnPropertyChanged(nameof(DailyAverageSpending));
+            OnPropertyChanged(nameof(TopSpendingCategory));
+            OnPropertyChanged(nameof(BudgetStatus));
+            OnPropertyChanged(nameof(BudgetStatusColor));
         }
 
         public void RefreshPage()
