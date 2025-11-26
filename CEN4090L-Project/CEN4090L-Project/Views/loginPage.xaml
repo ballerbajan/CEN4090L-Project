@@ -5,25 +5,43 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:vm="clr-namespace:CEN4090L_Project.ViewModels"
     Title="Login">
-
     <ContentPage.BindingContext>
         <vm:LoginViewModel />
     </ContentPage.BindingContext>
-
     <ScrollView>
         <VerticalStackLayout Padding="24" Spacing="20" VerticalOptions="Center">
 
-            <!-- App logo or title -->
-            <Label Text="College Companion"
-                   FontSize="32"
-                   FontAttributes="Bold"
-                   HorizontalOptions="Center"
-                   TextColor="#3B3B3B"/>
+            <!-- ========== LOGO & BRANDING SECTION ========== -->
+            <VerticalStackLayout HorizontalOptions="Center" Spacing="12" Margin="0,20,0,30">
+                <!-- App Logo/Icon -->
+                <Frame BackgroundColor="#7C3AED"
+                       CornerRadius="30"
+                       Padding="20"
+                       HasShadow="True"
+                       WidthRequest="100"
+                       HeightRequest="100"
+                       HorizontalOptions="Center">
+                    <Label Text="🎓💰"
+                           FontSize="50"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center"/>
+                </Frame>
 
-            <Label Text="Sign in to continue"
-                   FontSize="14"
-                   HorizontalOptions="Center"
-                   TextColor="#666"/>
+                <!-- App Title -->
+                <Label Text="College Companion"
+                       FontSize="32"
+                       FontAttributes="Bold"
+                       HorizontalOptions="Center"
+                       TextColor="#7C3AED"/>
+
+                <!-- Slogan in Italic/Cursive -->
+                <Label Text="Because your GPA isn't the only thing worth tracking"
+                       FontSize="16"
+                       FontAttributes="Italic"
+                       HorizontalOptions="Center"
+                       TextColor="#666"
+                       Margin="0,-5,0,0"/>
+            </VerticalStackLayout>
 
             <!-- Username field -->
             <VerticalStackLayout Spacing="6">
@@ -46,7 +64,7 @@
             <!-- Login button -->
             <Button Text="Login"
                     Command="{Binding LoginCommand}"
-                    BackgroundColor="#4B9EF7"
+                    BackgroundColor="#7C3AED"
                     TextColor="White"
                     CornerRadius="8"
                     FontAttributes="Bold"
@@ -56,7 +74,7 @@
             <HorizontalStackLayout HorizontalOptions="Center" Spacing="8">
                 <Label Text="Don't have an account?" FontSize="13" />
                 <Label Text="Register"
-                       TextColor="#4B9EF7"
+                       TextColor="#7C3AED"
                        FontAttributes="Bold">
                     <Label.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding RegisterCommand}" />
@@ -67,7 +85,7 @@
             <Label Text="Forgot Password?"
                    HorizontalOptions="Center"
                    FontSize="13"
-                   TextColor="#4B9EF7">
+                   TextColor="#7C3AED">
                 <Label.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding ForgotPasswordCommand}" />
                 </Label.GestureRecognizers>
