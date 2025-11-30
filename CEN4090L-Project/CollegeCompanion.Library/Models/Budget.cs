@@ -20,6 +20,7 @@ public class Budget
 
     public Budget() { }
 
+    public int Id { get; set; }
     public Budget(decimal need, decimal want, decimal saving)
     {
         Needs = need;
