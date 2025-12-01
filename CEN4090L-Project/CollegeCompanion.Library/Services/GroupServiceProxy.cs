@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using BCrypt.Net;
 using CEN4090L_Project.Models;
+using CollegeCompanion.Library.Utilities;
+using Newtonsoft.Json;
 
 namespace CEN4090L_Project.Services
 {
@@ -19,7 +21,12 @@ namespace CEN4090L_Project.Services
                 return groups;
             }
         }
-        public GroupServiceProxy() { }
+        public GroupServiceProxy() {
+            var groupData = new WebRequestHandler().Get("/Group/Expand").Result;
+            groups = JsonConvert.DeserializeObject<List<Group>>(groupData) ?? new List<Group>();
+        
+        
+        }
 
         private static object _lock = new object();
         private static GroupServiceProxy? instance;
@@ -150,6 +157,9 @@ namespace CEN4090L_Project.Services
             {
                 return user;
             }
+            var isNewUser = user.Id == 0;
+            var userData = new WebRequestHandler().Post("/Users", user).Result;
+            var newProject = JsonConvert.DeserializeObject<User>(userData);
             // Id 0 means new user
             if (user.Id == 0)
             {
