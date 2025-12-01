@@ -1,36 +1,59 @@
 using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
 namespace CEN4090L_Project.Models
 {
+    [Table ("SavingsGoal")]
     public class SavingsGoal
     {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Column ("Id")]
         public int Id { get; set; }                         // 0 = new (not saved yet)
+
+        [Column("OwnerUserId")]
         public int OwnerUserId { get; set; }
 
+        [Column("Title")]
         public string Name { get; set; } = string.Empty;
         public string? Category { get; set; }
 
+        [Column("TargetAmount", TypeName = "decimal")]
         public decimal TargetAmount { get; set; }           // e.g., 800.00
+
+        [Column("CurrentAmount", TypeName = "decimal")]
         public decimal CurrentAmount { get; set; } = 0m;    // how much saved so far
 
+        [Column("CreatedAt", TypeName = "timestamp")]
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+
+        [Column("TargetDate", TypeName = "timestamp")]
         public DateTime? TargetDate { get; set; }           // optional deadline
 
+        [Column("Priority", TypeName = "int")]
+        [Range(1, 5)]
         public int Priority { get; set; } = 3;              // 1..5
+
+        [NotMapped]
         public bool IsActive { get; set; } = true;          // soft-delete / archive
 
+        [Column("MonthlyAllocation", TypeName = "decimal")]
         // how much of this month’s savings budget is allocated to this goal
         public decimal MonthlyAllocation { get; set; } = 0m;
 
+        [NotMapped]
         // -------- computed / UI helpers --------
         [JsonIgnore]
         public decimal RemainingAmount => Math.Max(0m, TargetAmount - CurrentAmount);
 
+        [NotMapped]
         [JsonIgnore]
         public decimal PercentComplete =>
             TargetAmount <= 0 ? 0 : Math.Clamp(CurrentAmount / TargetAmount, 0, 1);
 
+        [NotMapped]
         [JsonIgnore]
         public bool IsAchieved => CurrentAmount >= TargetAmount;
 

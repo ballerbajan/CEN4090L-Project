@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Maui;
+﻿using CollegeCompanion.Library.ioC;
+using CommunityToolkit.Maui;
 using Microsoft.Extensions.Logging;
 using Syncfusion.Maui.Toolkit.Hosting;
 
@@ -26,6 +27,8 @@ namespace CEN4090L_Project
                     fonts.AddFont("SegoeUI-Semibold.ttf", "SegoeSemibold");
                     fonts.AddFont("FluentSystemIcons-Regular.ttf", FluentUI.FontFamily);
                 });
+            builder.Services.AddApiClientService(x => x.ApiBaseAdress = "https://localhost:7149/");
+            builder.Services.AddTransient<MainDashboardPage>();
 
 #if DEBUG
     		builder.Logging.AddDebug();

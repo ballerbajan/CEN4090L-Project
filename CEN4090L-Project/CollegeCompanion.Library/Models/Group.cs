@@ -1,16 +1,20 @@
 // Group.cs
 using CEN4090L_Project.Models;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CEN4090L_Project.Models
 {
     public class Group
     {
         // Properties
+
         public int ID { get; set; }
+
         public string? Name { get; set; }
 
         // Private backing field for savings goal
         private SavingsGoal? _savingsGoal;
+
         public SavingsGoal? SavingsGoal
         {
             get { return _savingsGoal; }
