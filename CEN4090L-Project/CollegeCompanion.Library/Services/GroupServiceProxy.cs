@@ -5,12 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 using BCrypt.Net;
 using CEN4090L_Project.Models;
+using CollegeCompanion.Library.Services;
 
 namespace CEN4090L_Project.Services
 {
     public class GroupServiceProxy
     {
         private List<Group> groups = new List<Group>();
+        private readonly ApiClientService apiClientService;
 
         public List<Group> Groups
         {

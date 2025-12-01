@@ -16,5 +16,9 @@ namespace CEN4090L_Project.Data
         }
 
         public DbSet<User> Users { get; set; }
+        public DbSet<Budget> Budgets { get; set; }
+
+        public DbSet<Expense> Expenses { get; set; }
+        public DbSet<SavingsGoal> SavingsGoals { get; set; }
     }
 }

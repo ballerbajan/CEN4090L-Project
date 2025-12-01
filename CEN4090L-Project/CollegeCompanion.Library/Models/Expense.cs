@@ -1,18 +1,34 @@
-using System;
-using System.Drawing;
 using CEN4090L_Project.Models;
+using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Drawing;
 
+[Table("Expense")]
 public class Expense
 {
     public DateTime Date;
 
     public Expense() {}
-	public int Id { get; set; }
-	public string? Title { get; set; }
-	public decimal? Amount { get; set; }
 
+    [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    [Column("Id")]
+    public int Id { get; set; }
+
+    [Column("Title")]
+    public string? Title { get; set; }
+
+    [Column("Amount", TypeName = "decimal")]
+    public decimal? Amount { get; set; }
+
+    [Column("Description")]
     public string? Description { get; set; }
+
+    [Column("Category")]
     public BudgetCategory? Category { get; set; }
+
+    [Column("DateTime", TypeName = "timestamp")]
     public DateTime DateTime { get; set; } = DateTime.Now;
     public Color CategoryColor => Category switch
     {
@@ -22,10 +38,8 @@ public class Expense
         _ => ColorTranslator.FromHtml("#6B7280")
     };
 
-
+    [NotMapped]
     public string CategoryName => Category?.ToString() ?? "Uncategorized";
-
-
 
     public override string ToString()
 	{

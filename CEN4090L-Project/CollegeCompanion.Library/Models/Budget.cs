@@ -1,8 +1,11 @@
 using CEN4090L_Project.Models;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 
+[Table("Budget")]
 public class Budget
 {
     // List of all expense managed by the budget
@@ -20,6 +23,9 @@ public class Budget
 
     public Budget() { }
 
+    [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    [Column("Id")]
     public int Id { get; set; }
     public Budget(decimal need, decimal want, decimal saving)
     {
@@ -34,8 +40,13 @@ public class Budget
         set { expenses = value; }
     }
 
+    [Column("Needs")]
     public decimal? Needs { get; set; }
+
+    [Column("Wants")]
     public decimal? Wants { get; set; }
+
+    [Column("Savings")]
     public decimal? Savings { get; set; }
 
     // ADD THESE NEW PROPERTIES for UI display:
@@ -60,6 +71,7 @@ public class Budget
     public decimal WantsAllocated => Wants ?? 0;
     public decimal SavingsAllocated => Savings ?? 0;
 
+    [Column("total_amount")]
     // Calculates the total budget while setting the expenses. Gets the total amount
     public decimal? TotalAmount
     {
