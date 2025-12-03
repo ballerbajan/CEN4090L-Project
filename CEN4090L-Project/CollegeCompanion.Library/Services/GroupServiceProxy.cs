@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using BCrypt.Net;
 using CEN4090L_Project.Models;
 using CollegeCompanion.Library.Services;
+using CollegeCompanion.Library.Utilities;
+using Newtonsoft.Json;
 
 namespace CEN4090L_Project.Services
 {
@@ -24,8 +26,6 @@ namespace CEN4090L_Project.Services
         public GroupServiceProxy() {
             var groupData = new WebRequestHandler().Get("/Group/Expand").Result;
             groups = JsonConvert.DeserializeObject<List<Group>>(groupData) ?? new List<Group>();
-        
-        
         }
 
         private static object _lock = new object();
