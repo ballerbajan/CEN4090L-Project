@@ -1,9 +1,10 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using CEN4090L_Project.Data;
+﻿using CEN4090L_Project.Data;
 using CEN4090L_Project.Models;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using WebApi.Enterprise;
 
 namespace WebApi.Controllers
 {
@@ -11,61 +12,37 @@ namespace WebApi.Controllers
     [ApiController]
     public class ExpenseController : ControllerBase
     {
-        private readonly AppDbContext _dbContext;
+        private readonly ExpenseEC _ec; // controller intermediary
 
-        public ExpenseController(AppDbContext dbContext) => _dbContext = dbContext;
+
+        public ExpenseController(ExpenseEC ec) {
+            _ec = ec;
+        }
 
         [HttpGet]
-        public async Task<List<Expense>> Get()
+        public async Task<IEnumerable<Expense>> GetExpenses()
         {
-            return await _dbContext.Expenses.ToListAsync();
+            return await _ec.GetExpenses();
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Expense?>> GetById(int id)
+        public async Task<ActionResult<Expense?>> GetExpenseById(int id)
         {
-            return await _dbContext.Expenses.FirstOrDefaultAsync(x => x.Id == id);
+            return await _ec.GetExpenseById(id);
         }
 
 
         [HttpPost]
         public async Task<ActionResult<Expense>> Create([FromBody] Expense expense)
         {
-            //if(string.IsNullOrWhiteSpace(budget.Name) ||
-            //    string.IsNullOrWhiteSpace(budget.Email) ||
-            //    string.IsNullOrWhiteSpace(budget.Password) ||
-            //    string.IsNullOrWhiteSpace(budget.Username))
-            //{
-            //    return BadRequest("Invalid Requests");
-            //}
-            await _dbContext.Expenses.AddAsync(expense);
-            await _dbContext.SaveChangesAsync();
-            return CreatedAtAction(nameof(GetById), new { id = expense.Id }, expense);
+            var created = await _ec.Add(expense);
+            return CreatedAtAction(nameof(GetExpenseById), new { id = created.Id }, created);
         }
 
         [HttpPut]
-        public async Task<ActionResult> Update([FromBody] Budget budget)
+        public async Task Update(int id, [FromBody] Expense expense)
         {
-            //if (user.Id == 0 ||
-            //   string.IsNullOrWhiteSpace(user.Name) ||
-            //   string.IsNullOrWhiteSpace(user.Email) ||
-            //   string.IsNullOrWhiteSpace(user.Password) ||
-            //   string.IsNullOrWhiteSpace(user.Username))
-            //{
-            //    return BadRequest("Invalid Requests");
-            //}
-
-            await _dbContext.Budgets.AddAsync(budget);
-            await _dbContext.SaveChangesAsync();
-
-            return Ok();
+            await _ec.Update(id, expense);
         }
-
-        ////[HttpDelete("{id}")]
-
-
-
-
-
     }
 }

@@ -26,15 +26,17 @@ namespace WebApi.Controllers
         }
 
         [HttpPost]
-        public async Task<Budget> Create([FromBody] Budget budget)
+        public async Task<ActionResult<Budget>> Create([FromBody] Budget budget)
         {
-            return await _ec.Add(budget);
+            var created = await _ec.Add(budget);
+            // returns 201 created response with location header
+            return CreatedAtAction(nameof(GetBudgetById), new { id = created.Id }, created);
         }
 
         [HttpPut("{id}")]
         public async Task Update(int id, [FromBody] Budget budget)
         {
-            return await _ec.Update(id,budget);
+            await _ec.Update(id,budget);
         }
 
         [HttpDelete("{id}")]

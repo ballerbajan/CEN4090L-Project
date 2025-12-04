@@ -13,8 +13,9 @@ namespace CEN4090L_Project.Models
         [Column ("Id")]
         public int Id { get; set; }                         // 0 = new (not saved yet)
 
-        [Column("OwnerUserId")]
-        public int OwnerUserId { get; set; }
+        [Column("UserId")]
+        public int UserId { get; set; }
+        public User? User { get; set; }                // navigation property
 
         [Column("Title")]
         public string Name { get; set; } = string.Empty;

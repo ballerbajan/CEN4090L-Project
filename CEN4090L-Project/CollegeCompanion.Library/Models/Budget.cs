@@ -11,10 +11,10 @@ public class Budget
     // List of all expense managed by the budget
     private List<Expense> expenses = new List<Expense>();
 
-    // List for every expense category
-    private List<Expense> needsList = new List<Expense>();
-    private List<Expense> wantsList = new List<Expense>();
-    private List<Expense> savingsList = new List<Expense>();
+    //// List for every expense category
+    //private List<Expense> needsList = new List<Expense>();
+    //private List<Expense> wantsList = new List<Expense>();
+    //private List<Expense> savingsList = new List<Expense>();
 
     private decimal? totalAmount;
     private decimal? needs;
@@ -27,6 +27,8 @@ public class Budget
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     [Column("Id")]
     public int Id { get; set; }
+    public int UserId { get; set; }
+    public User? User { get; set; } // navigation property
     public Budget(decimal need, decimal want, decimal saving)
     {
         Needs = need;
@@ -71,7 +73,7 @@ public class Budget
     public decimal WantsAllocated => Wants ?? 0;
     public decimal SavingsAllocated => Savings ?? 0;
 
-    [Column("total_amount")]
+    [Column("TotalAmount")]
     // Calculates the total budget while setting the expenses. Gets the total amount
     public decimal? TotalAmount
     {

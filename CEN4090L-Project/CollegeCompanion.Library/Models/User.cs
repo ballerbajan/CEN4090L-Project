@@ -16,6 +16,8 @@ namespace CEN4090L_Project.Models
         [Column("Id")]
         public int Id { get; set; }
 
+        public int GroupId { get; set; }
+
         [Column("Name")]
         public string? Name { get; set; }
 
@@ -28,13 +30,12 @@ namespace CEN4090L_Project.Models
         [Column("Username")]
         public string? Username { get; set; }
 
-        [Column("Budget_Id")]
+        [Column("BudgetId")]
+        public int? BudgetId { get; set; }
         public Budget? Budget { get; set; }
 
         [Column("Income")]
         public float? Income { get; set; } // tracked monthly income just a float
-
-        [Column("SavingsGoals_id")]
         public List<SavingsGoal> SavingsGoals { get; set; } = new List<SavingsGoal>();
 
         public override string ToString()

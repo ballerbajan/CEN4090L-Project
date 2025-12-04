@@ -15,6 +15,8 @@ public class Expense
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     [Column("Id")]
     public int Id { get; set; }
+    public int UserId { get; set; }
+    public User? User { get; set; } // navigation property
 
     [Column("Title")]
     public string? Title { get; set; }

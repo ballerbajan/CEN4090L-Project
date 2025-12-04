@@ -1,37 +1,50 @@
-﻿namespace WebApi.Enterprise
+﻿using CEN4090L_Project.Data;
+using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
+
+namespace WebApi.Enterprise
 {
     public class ExpenseEC
     {
-        public IEnumerable<Expense> GetExpenses()
+        private readonly AppDbContext _db;
+        public ExpenseEC(AppDbContext db)
         {
-            return FakeDatabase.CurrentUser.Expenses;
+            _db = db;
+        }
+        public async Task<IEnumerable<Expense>> GetExpenses()
+        {
+            return await _db.Expenses.ToListAsync();
         }
 
-        public Expense? GetExpenseById(int id)
+        public async Task<Expense?> GetExpenseById(int id)
         {
-            return FakeDatabase.CurrentUser.Expenses
-                .FirstOrDefault(t => t.Id == id);
+            return await _db.Expenses.FirstOrDefaultAsync(e => e.Id == id);
         }
 
-        public Expense? Delete(int id)
+        public async Task Delete(int id)
         {
-            var expenseToDelete = GetExpenseById(id);
-            if (expenseToDelete != null)
+            var expense = await GetExpenseById(id);
+            if (expense != null)
             {
-                FakeDatabase.CurrentUser.Expenses.Remove(expenseToDelete);
+                _db.Expenses.Remove(expense);
+                await _db.SaveChangesAsync();
             }
-            return expenseToDelete;
         }
 
-        public Expense? AddOrUpdate(Expense? expense)
+        public async Task<Expense> Add(Expense expense)
         {
-            if (expense != null && expense.Id == 0)
-            {
-                expense.Id = FakeDatabase.NextExKey;
-                FakeDatabase.CurrentUser.Expenses.Add(expense);
-            }
-
+            _db.Expenses.Update(expense);
+            await _db.SaveChangesAsync();
             return expense;
+        }
+
+        public async Task Update(int id, Expense expense)
+        {
+            if (id == expense.Id)
+            {
+                _db.Expenses.Update(expense);
+                await _db.SaveChangesAsync();
+            }
         }
     }
 }
