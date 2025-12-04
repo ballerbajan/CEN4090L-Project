@@ -4,6 +4,7 @@ using CEN4090L_Project.Data;
 using CEN4090L_Project.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
+using WebApi.Enterprise;
 
 namespace WebApi.Controllers
 {
@@ -11,71 +12,41 @@ namespace WebApi.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private readonly AppDbContext _dbContext;
-        public UserController(AppDbContext dbContext) => _dbContext = dbContext;
+        private readonly UserEC _ec; // controller intermediary
+        public UserController(UserEC ec)
+        {
+            _ec = ec;
+        }
 
         [HttpGet]
-        public async Task<List<User>> Get()
+        public async Task<IEnumerable<User>> GetUsers()
         {
-            return await _dbContext.Users.ToListAsync();
+            return await _ec.GetUsers();
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<User?>> GetById(int id)
+        public async Task<ActionResult<User?>> GetUserById(int id)
         {
-            return await _dbContext.Users.FirstOrDefaultAsync(x => x.Id == id);
-
+            return await _ec.GetUserById(id);
         }
 
         [HttpPost]
         public async Task<ActionResult<User>> Create([FromBody] User user)
         {
-            if (string.IsNullOrWhiteSpace(user.Name) ||
-                string.IsNullOrWhiteSpace(user.Email) ||
-                string.IsNullOrWhiteSpace(user.Password) ||
-                string.IsNullOrWhiteSpace(user.Username))
-            {
-                return BadRequest("Invalid Requests");
-            }
-
-            await _dbContext.Users.AddAsync(user);
-            await _dbContext.SaveChangesAsync();
-
-            return CreatedAtAction(nameof(GetById), new { id = user.Id }, user);
+            var created = await _ec.Add(user);
+            return CreatedAtAction(nameof(GetUserById), new { id = user.Id }, user);
         }
 
         [HttpPut]
-        public async Task<ActionResult> Update([FromBody] User user)
+        public async Task Update(int id, [FromBody] User user)
         {
-            if (user.Id == 0 || 
-               string.IsNullOrWhiteSpace(user.Name) ||
-               string.IsNullOrWhiteSpace(user.Email) ||
-               string.IsNullOrWhiteSpace(user.Password) ||
-               string.IsNullOrWhiteSpace(user.Username))
-            {
-                return BadRequest("Invalid Requests");
-            }
-
-            await _dbContext.Users.AddAsync(user);
-            await _dbContext.SaveChangesAsync();
-
-            return Ok();
+            await _ec.Update(id, user);
         }
 
-        //[HttpDelete("{id}")]
-        //public async Task<ActionResult> Delete(int id)
-        //{
-        //    var user = await GetById(id);
-        //    if (user is null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    _dbContext.Users.Remove(user);
-        //    await _dbContext.SaveChangesAsync();
-        //    return Ok();
-        //}
-
-
-
+        [HttpDelete("{id}")]
+        public async Task Delete(int id)
+        {
+            await _ec.Delete(id);
+        }
     }
 }

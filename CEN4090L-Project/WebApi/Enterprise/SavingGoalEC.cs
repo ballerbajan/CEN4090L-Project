@@ -1,39 +1,49 @@
-﻿using CEN4090L_Project.Models;
+﻿using CEN4090L_Project.Data;
+using CEN4090L_Project.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace WebApi.Enterprise
 {
     public class SavingGoalEC
     {
-        public IEnumerable<SavingsGoal> GetSavingsGoals()
+        private readonly AppDbContext _db;
+        public SavingGoalEC(AppDbContext db)
         {
-            return FakeDatabase.CurrentUser.SavingsGoals;
+            _db = db;
+        }
+        public async Task<IEnumerable<SavingsGoal>> GetSavingsGoals()
+        {
+            return await _db.SavingsGoals.ToListAsync();
         }
 
-        public SavingsGoal? GetSavingsGoalById(int id)
+        public async Task<SavingsGoal?> GetSavingsGoalById(int id)
         {
-            return FakeDatabase.CurrentUser.SavingsGoals
-                .FirstOrDefault(t => t.Id == id);
+            return await _db.SavingsGoals.FirstOrDefaultAsync(sg => sg.Id == id);
         }
 
-        public SavingsGoal? Delete(int id)
+        public async Task Delete(int id)
         {
-            var savingsGoalToDelete = GetSavingsGoalById(id);
-            if (savingsGoalToDelete != null)
+            var savingsgoal = await GetSavingsGoalById(id);
+            if (savingsgoal != null)
             {
-                FakeDatabase.CurrentUser.Expenses.Remove(savingsGoalToDelete);
+                _db.SavingsGoals.Remove(savingsgoal);
+                await _db.SaveChangesAsync();
             }
-            return savingsGoalToDelete;
         }
-
-        public SavingsGoal? AddOrUpdate(SavingsGoal? savingsGoal)
+        public async Task<SavingsGoal> Add(SavingsGoal savingsGoal)
         {
-            if (savingsGoal != null && savingsGoal.Id == 0)
-            {
-                savingsGoal.Id = FakeDatabase.NextSGKey;
-                FakeDatabase.CurrentUser.SavingsGoals.Add(savingsGoal);
-            }
-
+            _db.SavingsGoals.Update(savingsGoal);
+            await _db.SaveChangesAsync();
             return savingsGoal;
+        }
+
+        public async Task Update(int id, SavingsGoal savingsGoal)
+        {
+            if (id == savingsGoal.Id)
+            {
+                _db.SavingsGoals.Update(savingsGoal);
+                await _db.SaveChangesAsync();
+            }
         }
     }
 }

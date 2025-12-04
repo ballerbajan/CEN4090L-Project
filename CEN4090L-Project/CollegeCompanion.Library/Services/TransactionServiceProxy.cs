@@ -90,7 +90,7 @@ namespace CEN4090L_Project.Services
         {
             var user = CurrentUser ?? throw new InvalidOperationException("No current user available.");
             // ensure owner is set
-            goal.OwnerUserId = user.Id;
+            goal.UserId = user.Id;
             var saved = _savingsService.AddOrUpdate(goal);
 
             // Optionally re-run allocations when goals change:

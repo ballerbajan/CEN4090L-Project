@@ -44,5 +44,11 @@ namespace WebApi.Controllers
         {
             await _ec.Update(id, expense);
         }
+
+        [HttpDelete("{id}")]
+        public async Task Delete(int id)
+        {
+            await _ec.Delete(id);
+        }
     }
 }

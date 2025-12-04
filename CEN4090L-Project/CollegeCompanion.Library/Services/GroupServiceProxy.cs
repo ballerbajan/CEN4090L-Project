@@ -118,14 +118,14 @@ namespace CEN4090L_Project.Services
             {
                 return group;
             }
-            if (group.ID == 0)
+            if (group.Id == 0)
             {
                 groups.Add(group);
                 return group;
             }
             else
             {
-                var existingGroup = groups.FirstOrDefault(g => g.ID == group.ID);
+                var existingGroup = groups.FirstOrDefault(g => g.Id == group.Id);
                 if (existingGroup != null)
                 {
                     var Index = groups.IndexOf(existingGroup);
@@ -197,7 +197,7 @@ namespace CEN4090L_Project.Services
 
         public void SwapGroup(Group? group)
         {
-            if (group?.ID != null)
+            if (group?.Id != null)
             {
                 CurrentGroup = group;
             }
