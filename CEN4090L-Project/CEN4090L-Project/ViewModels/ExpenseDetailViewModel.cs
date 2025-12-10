@@ -3,11 +3,14 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using CEN4090L_Project.Models;
+using CollegeCompanion.Library.Services;
 
 namespace CEN4090L_Project.ViewModels
 {
     public class ExpensePageViewModel : INotifyPropertyChanged
     {
+        private DatabaseService _db => DatabaseService.Current;
+
         private string? _description;
         private string? _amount;
         private DateTime _date = DateTime.Now;
@@ -92,6 +95,14 @@ namespace CEN4090L_Project.ViewModels
 
         private async Task OnSaveExpense()
         {
+            // Check if user is logged in
+            if (!_db.IsUserLoggedIn())
+            {
+                await Application.Current.MainPage.DisplayAlert("Error", "Please log in first.", "OK");
+                return;
+            }
+
+            // Validation
             if (string.IsNullOrWhiteSpace(Description))
             {
                 await Application.Current.MainPage.DisplayAlert("Error", "Please enter a description.", "OK");
@@ -112,28 +123,50 @@ namespace CEN4090L_Project.ViewModels
 
             try
             {
-                var expense = new Expense
+                // Convert BudgetCategory enum to string
+                string categoryString = SelectedCategory.Value.ToString();
+
+                // Save to database
+                bool success = _db.AddExpense(Description, amountValue, categoryString);
+
+                if (success)
                 {
-                    Title = Description,
-                    Description = Description,
-                    Amount = amountValue,
-                    Category = SelectedCategory.Value,
-                    Date = Date
-                };
+                    Console.WriteLine($"[EXPENSE VM] Expense saved: {Description} - ${amountValue} - {categoryString}");
 
-                // Use singleton instance directly
-                DashboardViewModel.Instance.RecentExpenses.Add(expense);
-                DashboardViewModel.Instance.OnPropertyChanged(nameof(DashboardViewModel.Instance.RecentExpenses));
+                    // Notify DashboardViewModel to refresh if it exists
+                    if (DashboardViewModel.Instance != null)
+                    {
+                        DashboardViewModel.Instance.LoadExpenses();
+                    }
 
-                await Application.Current.MainPage.DisplayAlert("Success",
-                    $"Expense added! Total: {DashboardViewModel.Instance.RecentExpenses.Count}",
-                    "OK");
+                    await Application.Current.MainPage.DisplayAlert("Success",
+                        "Expense added successfully!",
+                        "OK");
 
-                await Application.Current.MainPage.Navigation.PopAsync();
+                    // Clear form
+                    Description = string.Empty;
+                    Amount = string.Empty;
+                    Date = DateTime.Now;
+                    NeedsSelected = false;
+                    WantsSelected = false;
+                    SavingsSelected = false;
+                    SelectedCategory = null;
+
+                    await Application.Current.MainPage.Navigation.PopAsync();
+                }
+                else
+                {
+                    await Application.Current.MainPage.DisplayAlert("Error",
+                        "Failed to save expense. Please try again.",
+                        "OK");
+                }
             }
             catch (Exception ex)
             {
-                await Application.Current.MainPage.DisplayAlert("Error", $"Failed: {ex.Message}", "OK");
+                Console.WriteLine($"[EXPENSE VM] Error: {ex.Message}");
+                await Application.Current.MainPage.DisplayAlert("Error",
+                    $"Failed to save expense: {ex.Message}",
+                    "OK");
             }
         }
 

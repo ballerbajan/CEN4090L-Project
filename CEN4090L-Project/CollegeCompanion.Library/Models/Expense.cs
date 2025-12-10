@@ -6,10 +6,10 @@ public class Expense
 {
     public DateTime Date;
 
-    public Expense() {}
-	public int Id { get; set; }
-	public string? Title { get; set; }
-	public decimal? Amount { get; set; }
+    public Expense() { }
+    public int Id { get; set; }
+    public string? Title { get; set; }
+    public decimal? Amount { get; set; }
 
     public string? Description { get; set; }
     public BudgetCategory? Category { get; set; }
@@ -28,7 +28,7 @@ public class Expense
 
 
     public override string ToString()
-	{
-		return $"{Title}: {Amount}";
+    {
+        return $"{Title}: {Amount}";
     }
 }

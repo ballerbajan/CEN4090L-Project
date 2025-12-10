@@ -2,12 +2,14 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using CEN4090L_Project.Views;
 using CEN4090L_Project.Models;
+using CollegeCompanion.Library.Services;
 
 namespace CEN4090L_Project.ViewModels
 {
     public class LoginViewModel : INotifyPropertyChanged
     {
-        private GroupServiceProxy _service => GroupServiceProxy.Current;
+        // CHANGED: Use DatabaseService instead of GroupServiceProxy
+        private DatabaseService _db => DatabaseService.Current;
 
         private string _username = string.Empty;
         private string _password = string.Empty;
@@ -45,10 +47,15 @@ namespace CEN4090L_Project.ViewModels
                 return;
             }
 
-            // do login
-            if (_service.Login(_username, _password))
+            // Store credentials before clearing
+            var loginUsername = Username.Trim();
+            var loginPassword = Password;
+
+            Console.WriteLine($"[LOGIN VM] Attempting login with: {loginUsername}");
+
+            // CHANGED: Use DatabaseService instead of GroupServiceProxy
+            if (_db.Login(loginUsername, loginPassword))
             {
-                // For now, show success message and navigate to dashboard
                 await Application.Current.MainPage.DisplayAlert("Success", "Login successful!", "OK");
                 Password = string.Empty;
                 await Application.Current.MainPage.Navigation.PushAsync(new Views.MainDashboardPage());
@@ -58,13 +65,11 @@ namespace CEN4090L_Project.ViewModels
                 await Application.Current.MainPage.DisplayAlert("Error", "Invalid username or password.", "OK");
                 Password = string.Empty;
             }
-
         }
 
         private async void OnRegister()
         {
             await Application.Current.MainPage.Navigation.PushAsync(new Views.RegisterPage());
-            //await Application.Current.MainPage.DisplayAlert("Info", "Navigate to Register Page (to be implemented).", "OK");
         }
 
         private async void OnForgotPassword()
@@ -74,6 +79,7 @@ namespace CEN4090L_Project.ViewModels
 
         // INotifyPropertyChanged implementation
         public event PropertyChangedEventHandler? PropertyChanged;
+
         private void OnPropertyChanged([CallerMemberName] string? name = null) =>
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
     }
