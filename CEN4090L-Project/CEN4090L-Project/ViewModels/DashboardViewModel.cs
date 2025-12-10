@@ -5,15 +5,12 @@ using CEN4090L_Project.Views;
 using CEN4090L_Project.Models;
 using Microsoft.Maui.Controls;
 using System.Collections.Specialized;
-using CollegeCompanion.Library.Services;
 
 namespace CEN4090L_Project.ViewModels
 {
     public class DashboardViewModel : INotifyPropertyChanged
     {
         private static DashboardViewModel _instance;
-        private DatabaseService _db => DatabaseService.Current;
-
         public static DashboardViewModel Instance
         {
             get
@@ -28,6 +25,9 @@ namespace CEN4090L_Project.ViewModels
         private decimal _income = 0m;
         private decimal _plannedSavings = 0m;
         private ObservableCollection<Expense> _recent = new();
+
+        // info bubble visibility
+        private bool _isInfoVisible;
 
         // 50/30/20 allocations
         public decimal Income
@@ -47,28 +47,24 @@ namespace CEN4090L_Project.ViewModels
             get => _recent;
             set
             {
-                // Unsubscribe from old collection
                 if (_recent != null)
-                {
                     _recent.CollectionChanged -= RecentExpenses_CollectionChanged;
-                }
 
                 if (Set(ref _recent, value))
                 {
-                    // Subscribe to new collection
                     if (_recent != null)
-                    {
                         _recent.CollectionChanged += RecentExpenses_CollectionChanged;
-                    }
+
                     Recompute();
                 }
             }
         }
 
-        // Handle collection changes (add/remove items)
-        private void RecentExpenses_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        // show/hide the 50/30/20 info bubble
+        public bool IsInfoVisible
         {
-            Recompute();
+            get => _isInfoVisible;
+            set => Set(ref _isInfoVisible, value);
         }
 
         // computed totals
@@ -102,85 +98,17 @@ namespace CEN4090L_Project.ViewModels
         public Command EditBudgetCommand { get; }
         public Command AddExpenseCommand { get; }
         public Command<Expense> DeleteExpenseCommand { get; }
-        public Command RefreshCommand { get; }
+        public Command ShowInfoCommand { get; }   // toggles bubble
 
         private DashboardViewModel()
         {
-            // Initialize with empty collection
             RecentExpenses = new ObservableCollection<Expense>();
-
-            // Subscribe to collection changes
             RecentExpenses.CollectionChanged += RecentExpenses_CollectionChanged;
 
             EditBudgetCommand = new Command(OnEditBudget);
             AddExpenseCommand = new Command(OnAddExpense);
             DeleteExpenseCommand = new Command<Expense>(OnDeleteExpense);
-            RefreshCommand = new Command(LoadExpenses);
-
-            // Load expenses when dashboard is created
-            LoadExpenses();
-            LoadIncome();
-        }
-
-        // NEW METHOD: Load income from database
-        private void LoadIncome()
-        {
-            if (_db.IsUserLoggedIn())
-            {
-                Income = _db.GetIncome();
-                Console.WriteLine($"[DASHBOARD VM] Loaded income: ${Income}");
-            }
-        }
-        // NEW METHOD: Load expenses from database
-        public void LoadExpenses()
-        {
-            try
-            {
-                if (!_db.IsUserLoggedIn())
-                {
-                    Console.WriteLine("[DASHBOARD VM] No user logged in, skipping expense load");
-                    return;
-                }
-
-                Console.WriteLine("[DASHBOARD VM] Loading expenses from database...");
-
-                // Get expenses from database
-                var dbExpenses = _db.GetUserExpenses();
-
-                // Clear current collection
-                RecentExpenses.Clear();
-
-                // Convert database expenses to UI model expenses
-                foreach (var dbExp in dbExpenses)
-                {
-                    // Parse category string to BudgetCategory enum
-                    BudgetCategory? category = null;
-                    if (Enum.TryParse<BudgetCategory>(dbExp.Category, out var parsedCategory))
-                    {
-                        category = parsedCategory;
-                    }
-
-                    var uiExpense = new Expense
-                    {
-                        Id = dbExp.Id,
-                        Title = dbExp.Description,
-                        Description = dbExp.Description,
-                        Amount = dbExp.Amount,
-                        Category = category,
-                        Date = dbExp.Date,
-                        DateTime = dbExp.Date
-                    };
-
-                    RecentExpenses.Add(uiExpense);
-                }
-
-                Console.WriteLine($"[DASHBOARD VM] Loaded {RecentExpenses.Count} expenses");
-                Recompute();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"[DASHBOARD VM] Error loading expenses: {ex.Message}");
-            }
+            ShowInfoCommand = new Command(OnShowInfo);
         }
 
         private async void OnEditBudget()
@@ -196,12 +124,7 @@ namespace CEN4090L_Project.ViewModels
             );
 
             if (!string.IsNullOrEmpty(result) && decimal.TryParse(result, out decimal amount))
-            {
                 Income = amount;
-                // Save to database
-                _db.UpdateIncome(amount);
-                Console.WriteLine($"[DASHBOARD VM] Income saved: ${amount}");
-            }
         }
 
         private async void OnAddExpense()
@@ -224,45 +147,16 @@ namespace CEN4090L_Project.ViewModels
 
             try
             {
-                // Delete from database using the Id
-                if (expense.Id > 0)
-                {
-                    bool deleted = _db.DeleteExpense(expense.Id);
+                RecentExpenses.Remove(expense);
 
-                    if (deleted)
-                    {
-                        // Remove from UI collection
-                        RecentExpenses.Remove(expense);
-
-                        await Application.Current.MainPage.DisplayAlert(
-                            "Success",
-                            "Expense deleted successfully",
-                            "OK"
-                        );
-                    }
-                    else
-                    {
-                        await Application.Current.MainPage.DisplayAlert(
-                            "Error",
-                            "Failed to delete expense from database",
-                            "OK"
-                        );
-                    }
-                }
-                else
-                {
-                    // If no ID, just remove from UI
-                    RecentExpenses.Remove(expense);
-                    await Application.Current.MainPage.DisplayAlert(
-                        "Success",
-                        "Expense removed",
-                        "OK"
-                    );
-                }
+                await Application.Current.MainPage.DisplayAlert(
+                    "Success",
+                    "Expense deleted successfully",
+                    "OK"
+                );
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"[DASHBOARD VM] Delete error: {ex.Message}");
                 await Application.Current.MainPage.DisplayAlert(
                     "Error",
                     $"Failed to delete expense: {ex.Message}",
@@ -271,75 +165,15 @@ namespace CEN4090L_Project.ViewModels
             }
         }
 
-        // Quick Stats Properties
-        public int DaysRemainingInMonth
+        // toggle info bubble visibility
+        private void OnShowInfo()
         {
-            get
-            {
-                var today = DateTime.Today;
-                var lastDay = new DateTime(today.Year, today.Month, DateTime.DaysInMonth(today.Year, today.Month));
-                return (lastDay - today).Days + 1;
-            }
+            IsInfoVisible = !IsInfoVisible;
         }
 
-        public decimal DailyAverageSpending
+        private void RecentExpenses_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            get
-            {
-                var today = DateTime.Today;
-                var firstDay = new DateTime(today.Year, today.Month, 1);
-                int daysElapsed = (today - firstDay).Days + 1;
-
-                if (daysElapsed == 0) return 0m;
-                return TotalExpenses / daysElapsed;
-            }
-        }
-
-        public string TopSpendingCategory
-        {
-            get
-            {
-                if (TotalExpenses == 0) return "None";
-
-                var maxCategory = new[]
-                {
-                    new { Name = "Needs", Amount = TotalNeeds },
-                    new { Name = "Wants", Amount = TotalWants },
-                    new { Name = "Savings", Amount = TotalSavingsSpent }
-                }
-                .OrderByDescending(c => c.Amount)
-                .FirstOrDefault();
-
-                return maxCategory?.Name ?? "None";
-            }
-        }
-
-        public string BudgetStatus
-        {
-            get
-            {
-                if (Income == 0) return "Not Set";
-
-                decimal spendingRate = TotalExpenses / Income;
-
-                if (spendingRate <= 0.75m) return "On Track ✓";
-                if (spendingRate <= 0.95m) return "Watch ⚠️";
-                return "Over Budget ⚠️";
-            }
-        }
-
-        public Color BudgetStatusColor
-        {
-            get
-            {
-                if (Income == 0) return Color.FromArgb("#6B7280");
-
-                decimal spendingRate = TotalExpenses / Income;
-
-                if (spendingRate <= 0.75m) return Color.FromArgb("#10B981");
-                if (spendingRate <= 0.95m) return Color.FromArgb("#F59E0B");
-                return Color.FromArgb("#EF4444");
-            }
+            Recompute();
         }
 
         private void Recompute()
@@ -366,19 +200,9 @@ namespace CEN4090L_Project.ViewModels
             OnPropertyChanged(nameof(SavingsRemainingText));
 
             OnPropertyChanged(nameof(RemainingThisMonthText));
-
-            OnPropertyChanged(nameof(DaysRemainingInMonth));
-            OnPropertyChanged(nameof(DailyAverageSpending));
-            OnPropertyChanged(nameof(TopSpendingCategory));
-            OnPropertyChanged(nameof(BudgetStatus));
-            OnPropertyChanged(nameof(BudgetStatusColor));
         }
 
-        public void RefreshPage()
-        {
-            LoadExpenses();
-            Recompute();
-        }
+        public void RefreshPage() => Recompute();
 
         public event PropertyChangedEventHandler? PropertyChanged;
 

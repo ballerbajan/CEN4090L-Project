@@ -6,12 +6,11 @@
     xmlns:vm="clr-namespace:CEN4090L_Project.ViewModels"
     Title="College Companion">
 
-
-    <!-- Make content scrollable -->
     <ScrollView>
         <VerticalStackLayout Spacing="16" Padding="16">
+
+            <!-- HEADER -->
             <VerticalStackLayout HorizontalOptions="Center" Spacing="10" Margin="0,10,0,20">
-                <!-- App Icon with Gradient Background -->
                 <Frame BackgroundColor="#7C3AED"
                        CornerRadius="25"
                        Padding="15"
@@ -24,33 +23,23 @@
                            HorizontalOptions="Center"
                            VerticalOptions="Center"/>
                 </Frame>
-                <!-- App Title -->
+
                 <Label Text="College Companion"
                        FontSize="28"
                        FontAttributes="Bold"
                        HorizontalOptions="Center"
                        HorizontalTextAlignment="Center"
                        TextColor="#A78BFA"/>
-                <!-- Slogan in Italic/Cursive -->
-                <Label Text="Because your GPA isn't the only thing worth tracking"
-                   FontSize="16"
-                   FontAttributes="Italic"
-                   HorizontalOptions="Center"
-                   TextColor="#666"
-                   Margin="0,-5,0,0"/>
             </VerticalStackLayout>
 
             <!-- ========== TOP SUMMARY CARDS ========== -->
-            <!-- Displays income, expenses, and savings info -->
             <Grid ColumnDefinitions="*,*,*" ColumnSpacing="12">
-
                 <!-- INCOME CARD -->
                 <Frame Grid.Column="0" Padding="12" CornerRadius="16" HasShadow="True">
                     <VerticalStackLayout Spacing="4">
                         <Label Text="Income (Monthly)" FontSize="12" TextColor="#666" />
                         <Label Text="{Binding Income, StringFormat='${0:F2}'}"
                                FontSize="20" FontAttributes="Bold" />
-                        <!-- Navigates to Budget Edit Page -->
                         <Button Text="Edit Budget"
                                 Command="{Binding EditBudgetCommand}"
                                 Padding="8,4" />
@@ -70,10 +59,9 @@
                 <!-- SAVINGS CARD -->
                 <Frame Grid.Column="2" Padding="12" CornerRadius="16" HasShadow="True">
                     <VerticalStackLayout Spacing="4">
-                        <Label Text="Expense" FontSize="12" TextColor="#666" />
-
-                              
-                        <!-- Navigates to Add Expense Form -->
+                        <Label Text="Savings Planned" FontSize="12" TextColor="#666" />
+                        <Label Text="{Binding PlannedSavings, StringFormat='${0:F2}'}"
+                               FontSize="20" FontAttributes="Bold" />
                         <Button Text="Add Expense"
                                 Command="{Binding AddExpenseCommand}"
                                 Padding="8,4" />
@@ -81,232 +69,182 @@
                 </Frame>
             </Grid>
 
-            <!-- ========== 50/30/20 BUDGET BREAKDOWN ========== -->
-            <!-- NEEDS (50%) CARD -->
+            <!-- ========== 50/30/20 SECTION HEADER + BUBBLE ========== -->
+
+            <!-- title + round "i" badge -->
+            <Grid ColumnDefinitions="*,Auto" VerticalOptions="Center" Margin="0,10,0,0">
+                <Label Text="50/30/20 Budget Breakdown"
+                       FontAttributes="Bold"
+                       FontSize="20"
+                       VerticalOptions="Center" />
+
+                <!-- circular info badge -->
+                <Frame Grid.Column="1"
+                       WidthRequest="24"
+                       HeightRequest="24"
+                       CornerRadius="12"
+                       BackgroundColor="#E5E7EB"
+                       Padding="0"
+                       VerticalOptions="Center"
+                       HorizontalOptions="End">
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding ShowInfoCommand}" />
+                    </Frame.GestureRecognizers>
+                    <Label Text="i"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center"
+                           FontAttributes="Bold"
+                           TextColor="#111827"
+                           FontSize="14" />
+                </Frame>
+            </Grid>
+
+            <!-- speech-bubble style info box -->
+            <Frame IsVisible="{Binding IsInfoVisible}"
+                   BackgroundColor="#111827"
+                   Padding="10"
+                   CornerRadius="10"
+                   Margin="0,4,40,8"
+                   HasShadow="True"
+                   HorizontalOptions="Start">
+                <Label FontSize="12"
+                       TextColor="White">
+                    The 50/30/20 rule suggests dividing your monthly income into:
+                    50% for needs (rent, groceries, essentials),
+                    30% for wants (eating out, shopping, entertainment),
+                    and 20% for savings (emergency fund and goals).
+                    This dashboard tracks how your spending compares to those targets.
+                </Label>
+            </Frame>
+
+            <!-- ========== 50/30/20 CARDS ========== -->
+
+            <!-- NEEDS (50%) -->
             <Frame Grid.Row="0" Padding="12" CornerRadius="14" HasShadow="True">
                 <Grid ColumnDefinitions="Auto, *" ColumnSpacing="12" VerticalOptions="Center">
                     <Image Source="needs.png"
-               WidthRequest="80"
-               HeightRequest="80"
-               Aspect="AspectFit"
-               VerticalOptions="Center"/>
+                           WidthRequest="80"
+                           HeightRequest="80"
+                           Aspect="AspectFit"
+                           VerticalOptions="Center"/>
                     <VerticalStackLayout Grid.Column="1" Spacing="6" VerticalOptions="Center">
                         <Grid ColumnDefinitions="Auto, *">
                             <Label Text="Needs (50%)" FontAttributes="Bold"/>
-                            <Label Grid.Column="1" HorizontalTextAlignment="End"
-                       Text="{Binding NeedsRemainingText}"/>
+                            <Label Grid.Column="1"
+                                   HorizontalTextAlignment="End"
+                                   Text="{Binding NeedsRemainingText}"/>
                         </Grid>
-                        <ProgressBar Progress="{Binding NeedsProgress}" 
-                        HeightRequest="30"
-                        VerticalOptions="Center"
-                        ScaleY="2"
-                        ProgressColor="#3B82F6" />
+                        <ProgressBar Progress="{Binding NeedsProgress}"
+                                     HeightRequest="30"
+                                     VerticalOptions="Center"
+                                     ScaleY="2"
+                                     ProgressColor="#3B82F6" />
                         <Label FontSize="12" Text="{Binding NeedsSpentText}" />
                     </VerticalStackLayout>
                 </Grid>
             </Frame>
 
-            <!-- WANTS (30%) CARD -->
+            <!-- WANTS (30%) -->
             <Frame Grid.Row="1" Padding="12" CornerRadius="14" HasShadow="True">
                 <Grid ColumnDefinitions="Auto, *" ColumnSpacing="12" VerticalOptions="Center">
                     <Image Source="spending.png"
-               VerticalOptions="Center"
-               HeightRequest="80"
-               WidthRequest="80"
-               Aspect="AspectFit"/>
+                           VerticalOptions="Center"
+                           HeightRequest="80"
+                           WidthRequest="80"
+                           Aspect="AspectFit"/>
                     <VerticalStackLayout Grid.Column="1" Spacing="6" VerticalOptions="Center">
                         <Grid ColumnDefinitions="Auto, *">
                             <Label Text="Wants (30%)" FontAttributes="Bold"/>
                             <Label Grid.Column="1" HorizontalTextAlignment="End"
-                       Text="{Binding WantsRemainingText}"/>
+                                   Text="{Binding WantsRemainingText}"/>
                         </Grid>
-                        <ProgressBar Progress="{Binding WantsProgress}" 
-                        HeightRequest="30"
-                        VerticalOptions="Center"
-                        ScaleY="2"
-                        ProgressColor="#F59E0B" />
+                        <ProgressBar Progress="{Binding WantsProgress}"
+                                     HeightRequest="30"
+                                     VerticalOptions="Center"
+                                     ScaleY="2"
+                                     ProgressColor="#F59E0B" />
                         <Label FontSize="12" Text="{Binding WantsSpentText}" />
                     </VerticalStackLayout>
                 </Grid>
             </Frame>
 
-            <!-- SAVINGS (20%) CARD -->
+            <!-- SAVINGS (20%) -->
             <Frame Grid.Row="2" Padding="12" CornerRadius="14" HasShadow="True">
                 <Grid ColumnDefinitions="Auto, *" ColumnSpacing="12" VerticalOptions="Center">
                     <Image Source="piggy2.png"
-               HeightRequest="80"
-               WidthRequest="80"
-               Aspect="AspectFit"
-               VerticalOptions="Center"/>
+                           HeightRequest="80"
+                           WidthRequest="80"
+                           Aspect="AspectFit"
+                           VerticalOptions="Center"/>
                     <VerticalStackLayout Grid.Column="1" Spacing="6" VerticalOptions="Center">
                         <Grid ColumnDefinitions="Auto, *">
                             <Label Text="Savings (20%)" FontAttributes="Bold"/>
                             <Label Grid.Column="1" HorizontalTextAlignment="End"
-                       Text="{Binding SavingsRemainingText}"/>
+                                   Text="{Binding SavingsRemainingText}"/>
                         </Grid>
-                        <ProgressBar Progress="{Binding SavingsProgress}" 
-                        HeightRequest="30"
-                        VerticalOptions="Center"
-                        ScaleY="2"
-                        ProgressColor="#10B981" />
+                        <ProgressBar Progress="{Binding SavingsProgress}"
+                                     HeightRequest="30"
+                                     VerticalOptions="Center"
+                                     ScaleY="2"
+                                     ProgressColor="#10B981" />
                         <Label FontSize="12" Text="{Binding SavingsSpentText}" />
                     </VerticalStackLayout>
                 </Grid>
             </Frame>
-            <!-- ========== QUICK STATS CARDS ========== -->
-            <Label Text="Quick Insights" 
-       FontAttributes="Bold" 
-       FontSize="16" 
-       Margin="0,8,0,8"/>
 
-            <Grid ColumnDefinitions="*,*,*,*" ColumnSpacing="8">
-                <!-- Days Remaining Card -->
-                <Frame Grid.Column="0" 
-           Padding="10" 
-           CornerRadius="12" 
-           HasShadow="True"
-           BackgroundColor="#1F2937">
-                    <VerticalStackLayout Spacing="4" HorizontalOptions="Center">
-                        <Label Text="📅" 
-                   FontSize="24" 
-                   HorizontalOptions="Center"/>
-                        <Label Text="{Binding DaysRemainingInMonth}" 
-                   FontSize="22" 
-                   FontAttributes="Bold"
-                   TextColor="White"
-                   HorizontalOptions="Center"/>
-                        <Label Text="Days Left" 
-                   FontSize="10" 
-                   TextColor="#9CA3AF"
-                   HorizontalOptions="Center"/>
-                    </VerticalStackLayout>
-                </Frame>
-
-                <!-- Daily Average Card -->
-                <Frame Grid.Column="1" 
-           Padding="10" 
-           CornerRadius="12" 
-           HasShadow="True"
-           BackgroundColor="#1F2937">
-                    <VerticalStackLayout Spacing="4" HorizontalOptions="Center">
-                        <Label Text="💵" 
-                   FontSize="24" 
-                   HorizontalOptions="Center"/>
-                        <Label Text="{Binding DailyAverageSpending, StringFormat='${0:F0}'}" 
-                   FontSize="22" 
-                   FontAttributes="Bold"
-                   TextColor="White"
-                   HorizontalOptions="Center"/>
-                        <Label Text="Daily Avg" 
-                   FontSize="10" 
-                   TextColor="#9CA3AF"
-                   HorizontalOptions="Center"/>
-                    </VerticalStackLayout>
-                </Frame>
-
-                <!-- Top Category Card -->
-                <Frame Grid.Column="2" 
-           Padding="10" 
-           CornerRadius="12" 
-           HasShadow="True"
-           BackgroundColor="#1F2937">
-                    <VerticalStackLayout Spacing="4" HorizontalOptions="Center">
-                        <Label Text="🏆" 
-                   FontSize="24" 
-                   HorizontalOptions="Center"/>
-                        <Label Text="{Binding TopSpendingCategory}" 
-                   FontSize="16" 
-                   FontAttributes="Bold"
-                   TextColor="White"
-                   HorizontalOptions="Center"/>
-                        <Label Text="Top Spend" 
-                   FontSize="10" 
-                   TextColor="#9CA3AF"
-                   HorizontalOptions="Center"/>
-                    </VerticalStackLayout>
-                </Frame>
-
-                <!-- Budget Status Card -->
-                <Frame Grid.Column="3" 
-           Padding="10" 
-           CornerRadius="12" 
-           HasShadow="True"
-           BackgroundColor="{Binding BudgetStatusColor}">
-                    <VerticalStackLayout Spacing="4" HorizontalOptions="Center">
-                        <Label Text="📊" 
-                   FontSize="24" 
-                   HorizontalOptions="Center"/>
-                        <Label Text="{Binding BudgetStatus}" 
-                   FontSize="14" 
-                   FontAttributes="Bold"
-                   TextColor="White"
-                   HorizontalOptions="Center"
-                   LineBreakMode="WordWrap"
-                   MaxLines="2"/>
-                        <Label Text="Status" 
-                   FontSize="10" 
-                   TextColor="White"
-                   HorizontalOptions="Center"/>
-                    </VerticalStackLayout>
-                </Frame>
-            </Grid>
-
-
-            <!-- ========== RECENT EXPENSES SECTION ========== -->
+            <!-- ========== RECENT EXPENSES ========== -->
             <Label Text="Recent Expenses" FontAttributes="Bold" FontSize="18" />
-           
+
             <CollectionView ItemsSource="{Binding RecentExpenses}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <SwipeView>
-                            <!-- Swipe to Delete -->
                             <SwipeView.RightItems>
                                 <SwipeItems Mode="Execute">
                                     <SwipeItem Text="Delete"
-                                  BackgroundColor="Red"
-                                  Command="{Binding Source={RelativeSource AncestorType={x:Type vm:DashboardViewModel}}, Path=DeleteExpenseCommand}"
-                                  CommandParameter="{Binding .}"/>
+                                               BackgroundColor="Red"
+                                               Command="{Binding Source={RelativeSource AncestorType={x:Type vm:DashboardViewModel}}, Path=DeleteExpenseCommand}"
+                                               CommandParameter="{Binding .}"/>
                                 </SwipeItems>
                             </SwipeView.RightItems>
 
                             <Frame Padding="12" Margin="0,5" CornerRadius="12" HasShadow="False" BorderColor="#dddddd">
                                 <Grid ColumnDefinitions="*,Auto,Auto" RowDefinitions="Auto,Auto">
-                                    <!-- Expense Info -->
                                     <Label Grid.Row="0" Grid.Column="0"
-                               Text="{Binding Title}"
-                               FontAttributes="Bold" />
+                                           Text="{Binding Title}"
+                                           FontAttributes="Bold" />
                                     <Label Grid.Row="0" Grid.Column="1"
-                               Text="{Binding Amount, StringFormat='{0:C}'}" />
+                                           Text="{Binding Amount, StringFormat='{0:C}'}" />
                                     <Label Grid.Row="1" Grid.Column="0"
-                               Text="{Binding Category}"
-                               FontSize="12" 
-                               TextColor="Gray" />
+                                           Text="{Binding Category}"
+                                           FontSize="12"
+                                           TextColor="Gray" />
                                     <Label Grid.Row="1" Grid.Column="1"
-                               Text="{Binding DateTime, StringFormat='{0:MMM dd}'}"
-                               FontSize="12" 
-                               TextColor="Gray" />
+                                           Text="{Binding DateTime, StringFormat='{0:MMM dd}'}"
+                                           FontSize="12"
+                                           TextColor="Gray" />
 
-                                    <!-- Delete X Button -->
                                     <Button Grid.Row="0" Grid.Column="2" Grid.RowSpan="2"
-                                Text="✕"
-                                FontSize="20"
-                                TextColor="Red"
-                                BackgroundColor="Transparent"
-                                WidthRequest="40"
-                                HeightRequest="40"
-                                CornerRadius="20"
-                                VerticalOptions="Center"
-                                Command="{Binding Source={RelativeSource AncestorType={x:Type vm:DashboardViewModel}}, Path=DeleteExpenseCommand}"
-                                CommandParameter="{Binding .}"/>
+                                            Text="✕"
+                                            FontSize="20"
+                                            TextColor="Red"
+                                            BackgroundColor="Transparent"
+                                            WidthRequest="40"
+                                            HeightRequest="40"
+                                            CornerRadius="20"
+                                            VerticalOptions="Center"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type vm:DashboardViewModel}}, Path=DeleteExpenseCommand}"
+                                            CommandParameter="{Binding .}"/>
                                 </Grid>
                             </Frame>
                         </SwipeView>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
+
                 <CollectionView.EmptyView>
                     <Label Text="No expenses recorded yet."
-               HorizontalOptions="Center"
-               Padding="16" />
+                           HorizontalOptions="Center"
+                           Padding="16" />
                 </CollectionView.EmptyView>
             </CollectionView>
 
